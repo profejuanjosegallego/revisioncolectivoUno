@@ -214,6 +214,7 @@ input[type=range]{width:100%;accent-color:var(--acento);height:1.5rem;background
 .tag.alta{color:var(--diverge)}
 .tag.media{color:var(--acento)}
 .tag.baja{color:var(--converge)}
+.tag.pocas{color:var(--ink-faint)}
 .barras{display:flex;flex-direction:column;gap:.5rem}
 .barra-item{display:grid;grid-template-columns:minmax(84px,auto) 1fr auto;gap:.7rem;align-items:center;font-size:.9rem}
 .barra-item .pista{height:14px;background:var(--surface-2);border:1px solid var(--line);border-radius:2px;overflow:hidden}
@@ -327,6 +328,7 @@ html{scroll-behavior:smooth}
 .mapa th:not(.mat){width:19.3%}
 .mapa td{text-align:center;padding:.6rem .3rem;font-family:var(--mono);font-size:.7rem;background:var(--surface-2);white-space:nowrap}
 .mapa td.disperso{outline:2px solid var(--diverge);outline-offset:-2px}
+.mapa td.pocas{outline:1px dashed var(--line-fuerte);outline-offset:-1px}
 
 .pastilla{display:inline-block;font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.09em;padding:.18rem .42rem;border:1px solid var(--line-fuerte);color:var(--ink-soft);white-space:nowrap}
 .pastilla.integra{border-color:var(--converge);color:var(--converge);background:var(--converge-tenue)}
@@ -757,11 +759,6 @@ var VACIAS = ("de la el los las un una unos unas y o u a en que se por con para 
 
 /* ═══════════ ESTADO ═══════════ */
 
-var CLAVE = "ct_revision_v3";
-var app = document.getElementById("app");
-var TRANSPORTE = null, publicando = false, temporizador = null;
-var analisisPintado = false, fallosSeguidos = 0;
-
 /* Si la página se sirve desde el Observatorio, el tablero vive en su API.
    Dentro del artifact esa ruta no responde y se usa la capability. */
 var RUTA_API = "/api/revision";
@@ -771,6 +768,18 @@ var SESION = (function(){
     return m ? m[1] : "2026-08";
   } catch(e){ return "2026-08"; }
 })();
+
+/* La clave lleva la sesión dentro: así cada ronda arranca en blanco en cada
+   navegador y lo respondido en un piloto no se cuela en la sesión real. */
+var CLAVE = "ct_revision_v3_" + SESION;
+
+/* Por debajo de este número el paso 05 no muestra resultados: con una o dos
+   respuestas las gráficas afirman cosas que los datos no sostienen. */
+var MIN_PARTICIPANTES = 3;
+
+var app = document.getElementById("app");
+var TRANSPORTE = null, publicando = false, temporizador = null;
+var analisisPintado = false, fallosSeguidos = 0;
 
 function leerCompartido(){
   try { return JSON.parse(document.getElementById("estado").textContent) || {v:3, participantes:{}}; }
@@ -844,6 +853,7 @@ function marcarPendiente(si){
     : "Tablero del colectivo <b>conectado</b>. Tus respuestas se suman al resultado del grupo, siempre sin nombre.";
 }
 function programarEnvio(inmediato){
+  try { pintarTablero(); } catch(e){}
   if(!TRANSPORTE) return;
   marcarPendiente(true);
   if(temporizador) clearTimeout(temporizador);
@@ -1314,7 +1324,9 @@ function pistaSVG(vals, mostrarBanda){
   var W = 320, H = 26, x = function(v){ return 8 + v / 100 * (W - 16); };
   var mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals), m = prom(vals);
   var d = desv(vals);
-  var color = d > 20 ? "var(--diverge)" : (d > 10 ? "var(--acento)" : "var(--converge)");
+  var color = vals.length < 3
+    ? "var(--ink-faint)"
+    : (d > 20 ? "var(--diverge)" : (d > 10 ? "var(--acento)" : "var(--converge)"));
   var s = '<svg viewBox="0 0 ' + W + " " + H + '" style="width:100%;height:auto;display:block" role="img" aria-label="Dispersión de respuestas">';
   s += '<rect x="8" y="11" width="' + (W - 16) + '" height="4" rx="2" fill="var(--line)"/>';
   if(mostrarBanda && vals.length > 1){
@@ -1340,6 +1352,18 @@ function montarAnalisis(){
   var html = "";
   var hayAlgo = false;
 
+  if(lista.length < MIN_PARTICIPANTES){
+    var faltan = MIN_PARTICIPANTES - lista.length;
+    cont.innerHTML = '<div class="aviso"><span class="pt"></span><span>' +
+      (lista.length === 0 ? "Todavía no hay respuestas."
+                          : "Por ahora hay " + plural(lista.length, "respuesta", "respuestas") + ".") +
+      " El tablero se abre con " + MIN_PARTICIPANTES +
+      ", porque con menos las gráficas afirman cosas que los datos no sostienen. Faltan " +
+      plural(faltan, "persona", "personas") + ".</span></div>";
+    analisisPintado = true;
+    return;
+  }
+
   /* 1 · dispersión por materia */
   var conPos = MATERIAS.map(function(m){
     var vals = lista.map(function(p){ return posDe(p, m.slug); })
@@ -1355,7 +1379,9 @@ function montarAnalisis(){
       '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Cada punto es una persona; la posición sale del promedio de los peldaños que marcó. La banda cubre el rango entre la respuesta más baja y la más alta; la línea vertical marca el promedio. Ordenadas de mayor a menor dispersión.</p>' +
       '<div style="margin-top:1.2rem">' +
       conPos.map(function(o){
-        var tag = o.d > 20 ? ["alta","muy dividido"] : (o.d > 10 ? ["media","dividido"] : ["baja","consenso"]);
+        var tag = o.vals.length < 3
+          ? ["pocas","sin lectura"]
+          : (o.d > 20 ? ["alta","muy dividido"] : (o.d > 10 ? ["media","dividido"] : ["baja","consenso"]));
         return '<div class="disp-fila"><div class="cab"><b>' + esc(o.m.nombre) + "</b>" +
           '<span><span class="tag ' + tag[0] + '">' + tag[1] + "</span> " +
           '<span class="n mono" style="font-size:.66rem;color:var(--ink-soft)">prom. ' + Math.round(o.p) +
@@ -1365,10 +1391,11 @@ function montarAnalisis(){
       }).join("") + "</div>" +
       '<div class="leyenda"><span><i style="background:var(--diverge)"></i>Muy dividido (±20 o más)</span>' +
       '<span><i style="background:var(--acento)"></i>Dividido</span>' +
-      '<span><i style="background:var(--converge)"></i>Consenso (±10 o menos)</span></div>' +
+      '<span><i style="background:var(--converge)"></i>Consenso (±10 o menos)</span>' +
+      '<span><i style="background:var(--ink-faint)"></i>Menos de tres respuestas: sin lectura</span></div>' +
       "</div>";
 
-    var top = conPos.slice(0, 3).filter(function(o){ return o.d > 10; });
+    var top = conPos.slice(0, 3).filter(function(o){ return o.d > 10 && o.vals.length >= 3; });
     if(top.length){
       html += '<div class="panel franja div" style="margin-top:1rem"><h3 style="margin-bottom:.6rem">Lectura</h3><p style="margin-bottom:0">' +
         "Donde más divergimos es en <b>" + top.map(function(o){ return esc(o.m.nombre); }).join("</b>, <b>") +
@@ -1381,7 +1408,8 @@ function montarAnalisis(){
   lista.forEach(function(p){
     if(p.obj) for(var k in p.obj){ if(p.obj[k]) textos.push(p.obj[k]); }
   });
-  if(textos.length >= 2){
+  var escritores = lista.filter(function(p){ return p.obj && Object.keys(p.obj).length; }).length;
+  if(escritores >= 2){
     hayAlgo = true;
     var ts = terminos(textos);
     var compartidos = ts.filter(function(t){ return t.df > 1; });
@@ -1401,7 +1429,53 @@ function montarAnalisis(){
       }).join("") + "</div>" +
       '<div class="leyenda"><span><i style="background:var(--converge)"></i>Vocabulario compartido</span>' +
       '<span><i style="background:var(--diverge-tenue);border:1px solid var(--diverge)"></i>Aparece una sola vez</span></div>' +
-      '<p class="fuente" style="margin-top:.9rem">Se descartan palabras vacías y términos de menos de cuatro letras. Un vocabulario mayoritariamente único no es un problema de redacción: indica que no hay acuerdo sobre para qué existe esa materia.</p></div>';
+      '<p class="fuente" style="margin-top:.9rem">Sobre las frases de las nueve materias juntas: mide el vocabulario común del colectivo, no el acuerdo dentro de una materia. Eso es lo que muestra el desglose de abajo. Se descartan palabras vacías y términos de menos de cuatro letras.</p>';
+
+    /* desglose por materia: aquí sí se comparan frases de la misma materia */
+    var porMateria = MATERIAS.map(function(m){
+      var fr = [];
+      lista.forEach(function(p){ if(p.obj && p.obj[m.slug]) fr.push(p.obj[m.slug]); });
+      if(fr.length < 2) return null;
+      var tm = terminos(fr);
+      var comunes = tm.filter(function(x){ return x.df > 1; });
+      return {m:m, n:fr.length, tot:tm.length, comunes:comunes,
+              pct: tm.length ? Math.round(comunes.length / tm.length * 100) : 0};
+    }).filter(function(o){ return o; }).sort(function(a, b){ return a.pct - b.pct; });
+
+    if(porMateria.length){
+      html += '<div style="margin-top:1.8rem"><span class="mini">Materia por materia · porcentaje de vocabulario compartido</span>' +
+        '<p style="font-size:.94rem;color:var(--ink-soft);margin:0 0 .9rem">Aquí solo se comparan entre sí las frases de una misma materia. Cuanto más bajo, más distinta es la idea que cada quien tiene de para qué existe.</p>' +
+        '<div class="barras">' +
+        porMateria.map(function(o){
+          return barra(o.m.nombre, o.pct, 100, o.pct + " % de " + o.n,
+                       "var(--" + (o.pct >= 40 ? "converge" : "diverge"), o.pct < 40);
+        }).join("") + "</div>" +
+        '<p class="fuente" style="margin-top:.7rem">' +
+        porMateria.filter(function(o){ return o.comunes.length; }).map(function(o){
+          return esc(o.m.nombre) + ": " + o.comunes.slice(0, 4).map(function(x){ return x.w; }).join(", ");
+        }).join(" · ") + "</p></div>";
+    }
+    html += "</div>";
+  }
+
+  /* 2c · las frases literales, por materia */
+  var conFrases = MATERIAS.map(function(m){
+    var fr = [];
+    lista.forEach(function(p){ if(p.obj && p.obj[m.slug]) fr.push(p.obj[m.slug]); });
+    return {m:m, fr:fr};
+  }).filter(function(o){ return o.fr.length; });
+
+  if(conFrases.length){
+    hayAlgo = true;
+    html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Las frases, una por una</span>' +
+      "<h3>Para qué existe cada materia, según el colectivo</h3>" +
+      '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Lo que cada quien escribió, tal cual y sin nombre. Leerlas seguidas es la forma más rápida de ver si hablamos de lo mismo.</p>' +
+      '<div style="margin-top:1.2rem">' + conFrases.map(function(o){
+        return '<div class="par-fila"><div class="cab"><b>' + esc(o.m.nombre) + '</b><span class="cif">' +
+          plural(o.fr.length, "frase", "frases") + "</span></div>" +
+          o.fr.map(function(t){ return '<p style="font-size:.95rem;margin:.2rem 0 0">· ' + esc(t) + "</p>"; }).join("") +
+          "</div>";
+      }).join("") + "</div></div>";
   }
 
   /* 2b · temáticas que faltan */
@@ -1533,7 +1607,7 @@ function montarAnalisis(){
     hayAlgo = true;
     html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica 5 · dónde caben hoy las prácticas transversales</span>' +
       "<h3>El mapa de las nueve materias</h3>" +
-      '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Promedio del colectivo en cada celda, de 0 (no cabe) a 3 (se practica y se evalúa). Cuanto más azul, más presencia. El borde magenta marca las celdas donde no nos ponemos de acuerdo.</p>' +
+      '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Promedio del colectivo en cada celda, de 0 (no cabe) a 3 (se practica y se evalúa). Cuanto más azul, más presencia. El borde magenta marca las celdas donde no nos ponemos de acuerdo; el punteado, las que todavía tienen menos de tres respuestas.</p>' +
       '<div class="tabla-envoltura" style="margin-top:1.2rem"><table class="mapa"><thead><tr><th class="mat">Materia</th>' +
       PRACTICAS.map(function(pr){ return "<th>" + esc(pr.c) + "</th>"; }).join("") +
       "</tr></thead><tbody>" +
@@ -1542,14 +1616,16 @@ function montarAnalisis(){
           PRACTICAS.map(function(pr){
             var c = celdas[m.slug][pr.k];
             if(!c.n) return '<td title="sin respuestas">·</td>';
-            return '<td class="' + (c.d > 0.85 ? "disperso" : "") + '" style="' + tonoCelda(c.v) +
-              '" title="' + esc(m.nombre + " · " + pr.n + " · promedio " + c.v.toFixed(1) + " · dispersión " + c.d.toFixed(1) + " · " + c.n + " resp.") +
+            var claseCelda = c.n < 3 ? "pocas" : (c.d > 0.7 ? "disperso" : "");
+            return '<td class="' + claseCelda + '" style="' + tonoCelda(c.v) +
+              '" title="' + esc(m.nombre + " · " + pr.n + " · promedio " + c.v.toFixed(1) + " · dispersión " + c.d.toFixed(1) + " · " + c.n + " resp." + (c.n < 3 ? " · base corta" : "")) +
               '">' + c.v.toFixed(1) + "</td>";
           }).join("") + "</tr>";
       }).join("") + "</tbody></table></div>" +
       '<div class="leyenda"><span><i style="background:var(--surface-2);border:1px solid var(--line)"></i>0 · no cabe</span>' +
       '<span><i style="background:var(--converge)"></i>3 · se practica y se evalúa</span>' +
-      '<span><i style="background:transparent;border:2px solid var(--diverge)"></i>Aquí no nos ponemos de acuerdo</span></div></div>';
+      '<span><i style="background:transparent;border:2px solid var(--diverge)"></i>Aquí no nos ponemos de acuerdo</span>' +
+      '<span><i style="background:transparent;border:1px dashed var(--line-fuerte)"></i>Menos de tres respuestas</span></div></div>';
   }
 
   /* 6 · alcance por nivel */
