@@ -476,11 +476,10 @@ html{scroll-behavior:smooth}
   <div class="panel" style="margin-top:1.2rem">
     <div class="campo">
       <label for="inLibre">Lo que esta revisión no preguntó y hay que decir</label>
-      <textarea id="inLibre" placeholder="Desacuerdos, condiciones, riesgos, lo que falta. Queda anónimo y entra en el acta."></textarea>
+      <textarea id="inLibre" placeholder="Desacuerdos, condiciones, riesgos, lo que falta. Queda anónimo y se suma al resultado del grupo."></textarea>
     </div>
     <div class="acciones">
       <button class="btn" id="btnCerrar">Registrar</button>
-      <button class="btn fantasma" id="btnExportar">Descargar el acta</button>
     </div>
     <div id="estadoCierre" class="fuente" style="margin-top:.8rem"></div>
   </div>
@@ -488,7 +487,7 @@ html{scroll-behavior:smooth}
   <div id="tableroFinal" style="margin-top:1.2rem"></div>
 
   <div class="pie">
-    <p style="margin-top:1.5rem;font-size:.85rem">Revisión conjunta del colectivo docente del Técnico Laboral como Asistente en Desarrollo de Software · CESDE Medellín. Las respuestas son anónimas y quedan en el acta descargable.</p>
+    <p style="margin-top:1.5rem;font-size:.85rem">Revisión conjunta del colectivo docente del Técnico Laboral como Asistente en Desarrollo de Software · CESDE Medellín. Las respuestas son anónimas: no se pide ni se guarda ningún nombre.</p>
   </div>
 </section>
 
@@ -914,7 +913,7 @@ function publicar(){
     fallosSeguidos++;
     if(fallosSeguidos >= 5){
       TRANSPORTE = null;
-      modoSolo("Se perdió la conexión con el tablero. Tus respuestas siguen guardadas en este dispositivo y puedes descargar tu acta al final; avísale a quien facilita la sesión.");
+      modoSolo("Se perdió la conexión con el tablero. Tus respuestas siguen guardadas en este dispositivo; avísale a quien facilita la sesión.");
       return;
     }
     temporizador = setTimeout(publicar, 8000);
@@ -967,7 +966,7 @@ function modoSolo(msg){
   if(!a) return;
   a.className = "aviso solo";
   document.getElementById("avisoTexto").innerHTML = msg ||
-    "Modo individual: tus respuestas se guardan solo en este dispositivo. Puedes recorrer todo y descargar tu acta al final.";
+    "Modo individual: tus respuestas se guardan solo en este dispositivo y no se suman al resultado del grupo. Nadie escribe su nombre.";
 }
 
 /* ═══════════ UTILIDADES ═══════════ */
@@ -1831,10 +1830,9 @@ function montarAcciones(){
   el("btnCerrar").addEventListener("click", function(){
     yo.libre = el("inLibre").value.trim();
     guardar(); programarEnvio(true);
-    el("estadoCierre").textContent = "Registrado. Ya está en el acta del colectivo.";
+    el("estadoCierre").textContent = "Registrado. Ya está en el resultado del colectivo.";
     pintarTablero();
   });
-  el("btnExportar").addEventListener("click", exportar);
   pintarTablero();
 }
 
