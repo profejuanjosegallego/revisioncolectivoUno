@@ -454,9 +454,19 @@ html{scroll-behavior:smooth}
   <div id="analisis" style="margin-top:1.5rem"></div>
 </section>
 
-<!-- ═══════ 06 · EVIDENCIA ═══════ -->
-<section class="estacion" id="e6" data-titulo="Por qué alinear">
-  <span class="eyebrow"><span class="num">Paso 06</span> · La evidencia</span>
+<!-- ═══════ 06 · LA RONDA ═══════ -->
+<section class="estacion" id="e6" data-titulo="Lo que salió">
+  <span class="eyebrow"><span class="num">Paso 06</span> · La ronda del 31 de agosto</span>
+  <h2>Lo que salió</h2>
+
+  <p class="lead">Once registros anónimos, leídos todos juntos. Aquí no habla nadie en particular: habla lo que queda cuando se ponen las once respuestas una al lado de la otra. Cada cifra trae cuántas personas la sostienen.</p>
+
+  <div id="ronda" style="margin-top:1.5rem"></div>
+</section>
+
+<!-- ═══════ 07 · EVIDENCIA ═══════ -->
+<section class="estacion" id="e7" data-titulo="Por qué alinear">
+  <span class="eyebrow"><span class="num">Paso 07</span> · La evidencia</span>
   <h2>Por qué esto importa</h2>
 
   <p class="lead">Cinco fuentes externas ya midieron el programa. Esto es lo que encontraron.</p>
@@ -464,9 +474,9 @@ html{scroll-behavior:smooth}
   <div id="evidencia" style="margin-top:1.5rem"></div>
 </section>
 
-<!-- ═══════ 07 · CIERRE ═══════ -->
-<section class="estacion" id="e7" data-titulo="Cierre">
-  <span class="eyebrow"><span class="num">Paso 07</span> · Cierre</span>
+<!-- ═══════ 08 · CIERRE ═══════ -->
+<section class="estacion" id="e8" data-titulo="Cierre">
+  <span class="eyebrow"><span class="num">Paso 08</span> · Cierre</span>
   <h2>Qué hacemos con las diferencias</h2>
 
   <p class="lead">Una divergencia medida y no atendida vuelve igual el próximo semestre. Marca las acciones que te parecen necesarias; el tablero muestra cuántas personas coinciden en cada una.</p>
@@ -1645,7 +1655,311 @@ function montarAnalisis(){
   analisisPintado = true;
 }
 
-/* ═══════════ 06 · EVIDENCIA ═══════════ */
+/* ═══════════ 06 · LA RONDA DEL 31 DE AGOSTO ═══════════ */
+
+/* Resultados congelados de la sesión 2026-08, calculados sobre los once registros
+   anónimos que quedaron en la base al cerrar la reunión. El instrumento no obliga
+   a responderlo todo y casi nadie respondió todo: por eso cada cifra lleva su n. */
+
+var RONDA = {
+  fecha: "31 de agosto de 2026",
+  sesion: "2026-08",
+  registros: 11,
+  franja: "entre las 4:14 y las 5:15 de la tarde",
+  posiciones: 57,
+  decisionesCaso: 47,
+  celdasMatriz: 198,
+  faltantes: 18
+};
+
+/* Bloque 1 · posición de cada materia entre lo esencial (0) y el nivel empresa (100).
+   v es la lista de respuestas individuales; d, la desviación estándar. */
+var POS = [
+ {slug:"logica",    n:10, p:49.6, d:10.8, mn:38, mx:75,  v:[50,37.5,75,58.3,50,50,37.5,50,50,37.5]},
+ {slug:"intro",     n:6,  p:64.6, d:8.6,  mn:50, mx:75,  v:[75,62.5,62.5,62.5,75,50]},
+ {slug:"bd",        n:7,  p:48.2, d:21.6, mn:0,  mx:75,  v:[0,50,50,62.5,75,50,50]},
+ {slug:"agiles",    n:6,  p:60.4, d:20.9, mn:38, mx:100, v:[37.5,50,75,50,100,50]},
+ {slug:"backend1",  n:7,  p:55.4, d:19.9, mn:38, mx:100, v:[37.5,50,50,37.5,100,50,62.5]},
+ {slug:"frontend1", n:6,  p:54.2, d:9.6,  mn:38, mx:67,  v:[62.5,37.5,66.7,50,50,58.3]},
+ {slug:"backend2",  n:5,  p:57.5, d:24.5, mn:25, mx:100, v:[25,50,62.5,100,50]},
+ {slug:"frontend2", n:5,  p:41.7, d:21.1, mn:0,  mx:58,  v:[0,58.3,50,50,50]},
+ {slug:"nuevastec", n:5,  p:37.5, d:22.4, mn:0,  mx:63,  v:[0,50,25,50,62.5]}
+];
+var POS_NIVEL = [{n:"Nivel I", p:54.1}, {n:"Nivel II", p:56.7}, {n:"Nivel III", p:45.6}];
+
+/* Bloque 2 · las 47 decisiones sobre el caso, repartidas por tipo de vínculo. */
+var VINCULO = [
+ {k:"insumo",   n:32, t:"Produce o consume un insumo de otra materia"},
+ {k:"propio",   n:11, t:"Ejercicio propio con el mismo tema"},
+ {k:"capa",     n:4,  t:"Construye una capa del mismo producto"},
+ {k:"paralelo", n:0,  t:"Entrega aparte, en la misma fecha"},
+ {k:"fuera",    n:0,  t:"El caso no aplica a la materia"}
+];
+var REQ_RONDA = [{id:"r1", n:7}, {id:"r7", n:6}, {id:"r3", n:5}, {id:"r5", n:5},
+                 {id:"r2", n:4}, {id:"r4", n:4}, {id:"r6", n:2}, {id:"r8", n:0}];
+var REQ_N = 10;
+var LIDER_RONDA = [
+ {niv:"Nivel I",   n:10, ops:[{t:"Ninguna: las tres en paralelo, sin líder", n:5},
+                              {t:"Lógica de Programación", n:2}, {t:"Gestión de Bases de Datos", n:2},
+                              {t:"Introducción a la Programación", n:1}]},
+ {niv:"Nivel II",  n:9,  ops:[{t:"Metodologías Ágiles", n:5}, {t:"Backend I", n:2},
+                              {t:"Ninguna: las tres en paralelo, sin líder", n:2}, {t:"Frontend I", n:0}]},
+ {niv:"Nivel III", n:9,  ops:[{t:"Ninguna: las tres en paralelo, sin líder", n:6},
+                              {t:"Backend II", n:2}, {t:"Nuevas Tecnologías de Programación", n:1},
+                              {t:"Frontend II", n:0}]}
+];
+
+/* Bloque 3 · las tres prácticas transversales.
+   Escala 0 no cabe · 1 se menciona · 2 se practica · 3 se practica y se evalúa. */
+var PRACT_NIVEL = [
+ {k:"git", I:1.36, II:2.08, III:2.43},
+ {k:"ia",  I:1.75, II:2.09, III:2.53},
+ {k:"ops", I:1.00, II:2.00, III:2.83}
+];
+/* Alcance acordado por nivel, con la opción más votada de las cuatro que ofrecía la pregunta. */
+var ALC = [
+ {niv:"I",   k:"git", n:8, p:2.00, d:0.50, cuantos:6,
+  moda:"Repositorio propio, commits con mensaje claro y sincronización, en una sola rama."},
+ {niv:"I",   k:"ia",  n:7, p:0.43, d:0.49, cuantos:4,
+  moda:"Ninguno: primero hay que aprender a resolver sin ella."},
+ {niv:"I",   k:"ops", n:7, p:1.14, d:0.64, cuantos:4,
+  moda:"Entender qué es un servidor y qué significa que algo esté «en la nube»."},
+ {niv:"II",  k:"git", n:6, p:2.00, d:1.15, cuantos:3,
+  moda:"GitFlow completo, con ramas de entrega y de corrección."},
+ {niv:"II",  k:"ia",  n:6, p:1.67, d:0.94, cuantos:3,
+  moda:"Auditoría del código del equipo antes de integrarlo al proyecto."},
+ {niv:"II",  k:"ops", n:6, p:1.33, d:0.47, cuantos:4,
+  moda:"Conocer la diferencia entre entorno de desarrollo y de producción."},
+ {niv:"III", k:"git", n:9, p:1.78, d:1.03, cuantos:3,
+  moda:"Empate entre «GitFlow, pero llegando ya con el hábito» y «un flujo más simple de entrega continua»."},
+ {niv:"III", k:"ia",  n:9, p:1.78, d:0.63, cuantos:5,
+  moda:"Auditoría cruzada entre equipos, con informe de hallazgos."},
+ {niv:"III", k:"ops", n:8, p:2.13, d:0.93, cuantos:4,
+  moda:"Integración y despliegue automáticos desde el repositorio."}
+];
+
+/* Las temáticas que el colectivo echó de menos, tal como las escribieron. */
+var FALTANTES = [
+ {slug:"backend1",  ts:["Principios de código limpio", "Fundamentos de una API",
+                        "SOLID e inyección de dependencias: «Backend I debe preparar Backend II»",
+                        "Usar Spring ya desde este nivel"]},
+ {slug:"backend2",  ts:["Bases de datos en la nube", "Pruebas de calidad automatizadas",
+                        "Procesos de despliegue y monitoreo de la aplicación"]},
+ {slug:"logica",    ts:["Matrices", "«En los temas solamente se alcanza a avanzar hasta vectores»",
+                        "Pensamiento sistémico"]},
+ {slug:"agiles",    ts:["DevOps como metodología y fundamentos de Git y GitHub para trabajo ágil",
+                        "Organizar un proyecto grande en piezas pequeñas y funcionales"]},
+ {slug:"intro",     ts:["Levantamiento inicial de requisitos",
+                        "Un espacio de desarrollo con IA: «dada la cantidad de desarrollo web a través de IA»"]},
+ {slug:"nuevastec", ts:["DevOps", "Power BI y bases de datos no relacionales"]},
+ {slug:"bd",        ts:["Cuándo usar bases de datos no relacionales, y hablar de ellas con más propiedad"]},
+ {slug:"frontend2", ts:["localStorage, sessionStorage y variables de entorno"]}
+];
+
+var HALLAZGOS = [
+ {n:"Hallazgo 01", c:"cv", t:"El piso de acuerdo es más ancho de lo que parecía",
+  p:"De las 47 decisiones sobre qué haría cada materia con el caso de la cooperativa, ninguna eligió «entrega aparte, en la misma fecha» y ninguna eligió «el caso no aplica a mi materia». Y ninguna de las diez personas marcó «nada especial: con que el tema sea el mismo, ya es integrador».",
+  d:"47 decisiones · 0 en «entrega paralela» · 0 en «no aplica» · 0 de 10 en «nada especial»"},
+ {n:"Hallazgo 02", c:"dv", t:"Estamos de acuerdo en el envase, no en el mecanismo",
+  p:"Sesenta y ocho de cada cien decisiones describen la materia produciendo o consumiendo un insumo de otra. Pero cuando se pregunta qué es imprescindible para que eso sea un integrador, ese insumo lo marcan 4 de 10, por debajo del mismo caso (7) y del mismo equipo (6). Lo que más se practica es lo que menos se legisla.",
+  d:"«insumo» 32 de 47 (68 %) · requisito «un artefacto que una produce y otra consume» 4 de 10"},
+ {n:"Hallazgo 03", c:"dv", t:"Queremos coordinación, pero no coordinador",
+  p:"«Ninguna: las tres en paralelo, sin líder» es la opción más votada en el Nivel I (5 de 10) y en el Nivel III (6 de 9). El Nivel II es el único con mandato claro: Metodologías Ágiles, 5 de 9. La mitad del colectivo pide en abstracto una materia que lidere y, a la hora de nombrarla, responde «ninguna» en dos de los tres niveles.",
+  d:"requisito «una materia que lidere» 5 de 10 · «ninguna» gana en el Nivel I y en el Nivel III"},
+ {n:"Hallazgo 04", c:"dv", t:"Le pedimos más a la entrada que a la salida",
+  p:"En la escala que va de lo esencial (0) al nivel empresa (100), el Nivel I promedia 54 y el Nivel II 57, pero el Nivel III cae a 46. La materia a la que más se le exige en todo el programa es Introducción a la Programación, del primer nivel; las dos a las que menos, Frontend II y Nuevas Tecnologías, son las del último. Nadie defendió eso en la reunión: sale de sumar las respuestas individuales.",
+  d:"Nivel I 54 · Nivel II 57 · Nivel III 46 · la más exigida: Introducción (65); la menos: Nuevas Tecnologías (38)"},
+ {n:"Hallazgo 05", c:"dv", t:"La IA ya está en el aula sin un acuerdo que la respalde",
+  p:"Preguntado por el alcance que le corresponde a la IA en el Nivel I, el colectivo responde 0,4 sobre 3: ninguno, o consulta puntual. Preguntado materia por materia, esas mismas materias del Nivel I aparecen con la IA entre «se menciona» y «se practica» (1,8 sobre 3; Introducción llega a 2,1). Las dos respuestas salen de las mismas personas. Es la única contradicción interna de toda la sesión.",
+  d:"alcance del Nivel I 0,4 / 3 · la misma IA, materia por materia, 1,8 / 3"}
+];
+
+function fijo(v, dec){ return v.toFixed(dec === undefined ? 1 : dec).split(".").join(","); }
+function veredictoPos(d){
+  return d > 20 ? {c:"dv", t:"divergencia"} : (d > 10 ? {c:"ac", t:"dispersión media"} : {c:"cv", t:"acuerdo"});
+}
+function nombreDe(slug){ var m = materia(slug); return m ? m.nombre : slug; }
+function textoDe(lista, campo, valor, salida){
+  for(var i = 0; i < lista.length; i++){ if(lista[i][campo] === valor) return lista[i][salida]; }
+  return "";
+}
+
+function montarRonda(){
+  var c = el("ronda");
+  if(!c) return;
+  var html = "";
+
+  /* --- la ficha de la ronda --- */
+  html += '<div class="panel-2"><span class="eyebrow">La ronda</span>' +
+    '<p style="font-size:.96rem;margin:0">' + RONDA.registros + " registros anónimos de la sesión <b>" +
+    esc(RONDA.sesion) + "</b>, recogidos el " + RONDA.fecha + " " + RONDA.franja +
+    ". Entre todos dejaron " + RONDA.posiciones + " posiciones de exigencia, " + RONDA.decisionesCaso +
+    " decisiones sobre el caso, " + RONDA.celdasMatriz + " celdas de la matriz de prácticas y " +
+    RONDA.faltantes + " temáticas que hacen falta.</p></div>";
+
+  /* --- los cinco hallazgos --- */
+  html += '<div style="margin-top:1.4rem">' + HALLAZGOS.map(function(h){
+    return '<div class="dolor"><span class="num" style="color:var(--' +
+      (h.c === "cv" ? "converge" : "diverge") + ')">' + esc(h.n) + "</span><h4>" + esc(h.t) +
+      "</h4><p>" + esc(h.p) + '</p><span class="dato">' + esc(h.d) + "</span></div>";
+  }).join("") + "</div>";
+
+  /* --- gráfica R1 · qué es para nosotros el integrador --- */
+  html += '<div class="panel" style="margin-top:1.4rem"><span class="eyebrow">Gráfica R1 · hallazgos 01 y 02</span>' +
+    "<h3>Qué es, para nosotros, el proyecto integrador</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Las ' + RONDA.decisionesCaso +
+    " decisiones del bloque 2, repartidas por el tipo de vínculo que cada opción implicaba. Las dos primeras son vínculo real; las otras tres, trabajo suelto.</p>" +
+    '<div class="barras" style="margin-top:1.2rem">' +
+    VINCULO.map(function(v){
+      return barra(v.t, v.n, RONDA.decisionesCaso,
+        v.n + " de " + RONDA.decisionesCaso + " · " + Math.round(v.n / RONDA.decisionesCaso * 100) + " %",
+        "var(--" + (v.k === "insumo" || v.k === "capa" ? "converge" : (v.k === "propio" ? "acento" : "line-fuerte")),
+        v.n === 0);
+    }).join("") + "</div>" +
+    '<div class="leyenda"><span><i style="background:var(--converge)"></i>Vínculo real</span>' +
+    '<span><i style="background:var(--acento)"></i>Mismo tema, trabajo suelto</span></div>' +
+    '<p style="font-size:.95rem;margin-top:1.2rem;margin-bottom:0">Cuatro de cada cinco decisiones conciben un vínculo real. Pero solo <b>4 de 47</b> imaginan un producto único del que su materia construye una capa: la figura que domina es la <b>cadena de insumos</b>, no el producto común. Y el «ejercicio propio» se concentra en tres materias: Lógica (3 de 6), Backend I y Frontend I (2 de 5 cada una).</p></div>';
+
+  /* --- gráfica R2 · los requisitos --- */
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica R2 · hallazgo 02</span>' +
+    "<h3>Qué consideramos imprescindible</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">De las 10 personas que marcaron algo, cuántas señalaron cada requisito. Se podía marcar todo lo que se quisiera.</p>' +
+    '<div class="barras" style="margin-top:1.2rem">' +
+    REQ_RONDA.map(function(r){
+      return barra(textoDe(REQUISITOS, "id", r.id, "t"), r.n, REQ_N, r.n + " de " + REQ_N,
+        "var(--" + (r.n >= 6 ? "converge" : (r.n >= 4 ? "acento" : "line-fuerte")), r.n < 4);
+    }).join("") + "</div>" +
+    '<p style="font-size:.95rem;margin-top:1.2rem;margin-bottom:0">Lo más votado es el <b>envase</b>: un mismo caso, un mismo equipo, una misma fecha. Lo menos votado es el <b>mecanismo</b>: el artefacto que se pasan las materias (4) y la rúbrica común (2). La buena noticia está al final de la lista: <b>nadie</b> marcó «nada especial: con que el tema sea el mismo, ya es integrador».</p></div>';
+
+  /* --- gráfica R3 · el liderazgo --- */
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica R3 · hallazgo 03</span>' +
+    "<h3>Quién lleva la batuta en cada nivel</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Una sola respuesta por nivel. Ordenadas de más a menos votos.</p>' +
+    '<div style="margin-top:1.2rem">' +
+    LIDER_RONDA.map(function(L){
+      return '<div class="par-fila"><div class="cab"><b>' + esc(L.niv) + '</b><span class="cif">' +
+        plural(L.n, "respuesta", "respuestas") + '</span></div>' +
+        '<div class="barras" style="margin-top:.5rem">' +
+        L.ops.map(function(o){
+          return barra(o.t, o.n, L.n, o.n + " de " + L.n,
+            "var(--" + (o.t.indexOf("Ninguna") === 0 ? "diverge" : "converge"), o.n === 0);
+        }).join("") + "</div></div>";
+    }).join("") + "</div>" +
+    '<div class="leyenda"><span><i style="background:var(--diverge)"></i>Sin líder</span>' +
+    '<span><i style="background:var(--converge)"></i>Con una materia que lidera</span></div>' +
+    '<p style="font-size:.95rem;margin-top:1.2rem;margin-bottom:0">El Nivel II sabe quién coordina. El Nivel I y el Nivel III, no: en los dos gana «ninguna». Si el integrador se sostiene en un insumo que una materia le pasa a otra, alguien tiene que responder por que ese insumo exista a tiempo.</p></div>';
+
+  /* --- gráfica R4 · la exigencia, materia por materia --- */
+  var orden = POS.slice().sort(function(a, b){ return b.d - a.d; });
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica R4 · hallazgo 04</span>' +
+    "<h3>Hasta dónde debería llegar el estudiante</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Cada punto es una persona; la posición sale del promedio de los peldaños que marcó. La banda cubre de la respuesta más baja a la más alta y la línea vertical marca el promedio. Ordenadas de mayor a menor dispersión.</p>' +
+    '<div style="margin-top:1.2rem">' +
+    orden.map(function(o){
+      var vd = veredictoPos(o.d);
+      return '<div class="par-fila"><div class="cab"><b>' + esc(nombreDe(o.slug)) +
+        '</b><span class="chip ' + vd.c + '">' + vd.t + '</span><span class="cif">promedio ' +
+        fijo(o.p) + " · dispersión ±" + fijo(o.d) + " · rango " + o.mn + "-" + o.mx + " · " +
+        plural(o.n, "respuesta", "respuestas") + "</span></div>" + pistaSVG(o.v, true) + "</div>";
+    }).join("") + "</div>" +
+    '<div class="polos" style="margin-top:.4rem"><span>Lo esencial</span><span>Nivel empresa</span></div>' +
+    '<div class="barras" style="margin-top:1.6rem">' +
+    POS_NIVEL.map(function(n){
+      return barra(n.n, n.p, 100, fijo(n.p) + " / 100",
+        "var(--" + (n.p >= 55 ? "converge" : (n.p >= 50 ? "acento" : "diverge")), n.p < 50);
+    }).join("") + "</div>" +
+    '<p style="font-size:.95rem;margin-top:1.2rem;margin-bottom:0"><b>Cinco de las nueve materias</b> pasan el umbral que el instrumento marca en magenta (±20). La más repartida es Backend II: la misma materia recibió un 25 y un 100, es decir, una persona la deja en «probar una API que ya está construida» y otra la lleva hasta «asegurarla y probarla de forma automática, como en producción». Las tres que sí tienen acuerdo son Introducción (±8,6), Frontend I (±9,6) y Lógica (±10,8).</p></div>';
+
+  /* --- gráfica R5 · las tres prácticas por nivel --- */
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica R5 · bloque 3</span>' +
+    "<h3>Las tres prácticas transversales, nivel por nivel</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Promedio de las tres materias de cada nivel en la escala 0 no cabe · 1 se menciona · 2 se practica · 3 se practica y se evalúa.</p>' +
+    PRACT_NIVEL.map(function(pr){
+      return '<div style="margin-top:1.1rem"><span class="mini">' +
+        esc(textoDe(PRACTICAS, "k", pr.k, "n")) + '</span><div class="barras">' +
+        [["Nivel I", pr.I], ["Nivel II", pr.II], ["Nivel III", pr.III]].map(function(f){
+          return barra(f[0], f[1], 3, fijo(f[1], 2) + " / 3",
+            "var(--" + (f[1] >= 2 ? "converge" : (f[1] >= 1.3 ? "acento" : "diverge")), f[1] < 1.3);
+        }).join("") + "</div></div>";
+    }).join("") +
+    '<p style="font-size:.95rem;margin-top:1.4rem;margin-bottom:0">En esto no hay pelea: las tres prácticas crecen de forma pareja con el nivel. La discusión no es <b>si</b> entran, sino <b>dónde arrancan</b>. La nube es la que arranca más tarde (1,00 en el Nivel I) y la que más lejos llega (2,83 en el Nivel III).</p></div>';
+
+  /* --- gráfica R6 · el alcance acordado, con su dispersión --- */
+  var alcOrden = ALC.slice().sort(function(a, b){ return a.d - b.d; });
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica R6 · hallazgo 05</span>' +
+    "<h3>Dónde ya hay acuerdo y dónde todavía no</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Las nueve preguntas de alcance, ordenadas de la más compacta a la más repartida. Debajo de cada una, la opción que más votos recibió.</p>' +
+    '<div style="margin-top:1.2rem">' +
+    alcOrden.map(function(a){
+      var vd = a.d <= 0.6 ? "cv" : (a.d <= 0.95 ? "ac" : "dv");
+      return '<div class="par-fila"><div class="cab"><b>Nivel ' + a.niv + " · " +
+        esc(textoDe(PRACTICAS, "k", a.k, "c")) + '</b><span class="chip ' + vd + '">±' +
+        fijo(a.d, 2) + '</span><span class="cif">promedio ' + fijo(a.p, 2) + " / 3 · " +
+        plural(a.n, "respuesta", "respuestas") + "</span></div>" +
+        '<p style="font-size:.92rem;color:var(--ink-soft);margin:.15rem 0 0">' + esc(a.moda) +
+        ' <span class="cif">(' + a.cuantos + " de " + a.n + ")</span></p></div>";
+    }).join("") + "</div>" +
+    '<p style="font-size:.95rem;margin-top:1.2rem;margin-bottom:0">La respuesta <b>más compacta de toda la sesión</b> es la del control de versiones en el Nivel I: seis de ocho personas eligieron exactamente la misma opción. Eso se puede escribir en el plan sin volver a discutirlo. En el extremo contrario está Git en el Nivel II (±1,15): hay quien lo quiere ya en GitFlow completo y quien todavía no lo quiere.</p>' +
+    '<div class="panel-2" style="margin-top:1.1rem"><span class="eyebrow">La contradicción de la IA</span>' +
+    '<p style="font-size:.95rem;margin:0">Alcance que le damos a la IA en el <b>Nivel I</b>: <b>0,43 sobre 3</b>, o sea «ninguno» o «consulta puntual». Grado con que aparece la IA en esas mismas materias del Nivel I, preguntadas una por una: <b>1,75 sobre 3</b>, y en Introducción a la Programación <b>2,14</b>, que ya es «se practica». No son dos grupos distintos: son las mismas personas respondiendo dos preguntas del mismo instrumento. La IA entró al aula por la puerta de atrás.</p></div></div>';
+
+  /* --- las temáticas que faltan --- */
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Lo que el colectivo echó de menos</span>' +
+    "<h3>Las " + RONDA.faltantes + " temáticas que faltan</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Siete personas usaron la casilla «falta una temática». Aquí están tal como las escribieron, agrupadas por materia.</p>' +
+    '<div style="margin-top:1.2rem">' +
+    FALTANTES.map(function(f){
+      return '<div class="par-fila"><div class="cab"><b>' + esc(nombreDe(f.slug)) + '</b><span class="cif">' +
+        plural(f.ts.length, "temática", "temáticas") + "</span></div>" +
+        '<ul style="margin:.3rem 0 0;padding-left:1.1rem">' +
+        f.ts.map(function(t){
+          return '<li style="font-size:.93rem;color:var(--ink-soft);line-height:1.5">' + esc(t) + "</li>";
+        }).join("") + "</ul></div>";
+    }).join("") + "</div>" +
+    '<p style="font-size:.95rem;margin-top:1.2rem;margin-bottom:0">Siete de las dieciocho apuntan al mismo sitio: <b>Backend I y Backend II</b>. Y las cuatro de Backend I piden lo mismo por cuatro caminos distintos —código limpio, SOLID, inyección de dependencias, Spring—: que Backend I prepare a Backend II. Es, además, la materia con la mayor dispersión de exigencia de todo el programa.</p></div>';
+
+  /* --- lo que ya se puede decidir --- */
+  var decisiones = [
+   {n:"01", t:"Git entra en el Nivel I, con repositorio propio.",
+    p:"Es el acuerdo más firme de la sesión: ±0,50 sobre 3, con seis de ocho personas en la misma opción. No hace falta otra reunión para esto."},
+   {n:"02", t:"Nombrar el insumo de cada nivel y volverlo obligatorio.",
+    p:"El modelo de datos en el Nivel I, el backlog en el II, el contrato de la API en el III. Es lo que el 68 % ya describe cuando cuenta qué haría con el caso; lo que falta es declararlo requisito, porque hoy solo 4 de 10 lo consideran imprescindible."},
+   {n:"03", t:"Una sesión dedicada solo a la IA.",
+    p:"Es la única contradicción que el instrumento midió: se practica en el aula del Nivel I y a la vez se dice que en el Nivel I no debería entrar. Mientras no se resuelva, cada quien aplica su propia regla."},
+   {n:"04", t:"Sentar a Backend I y a Backend II en la misma mesa.",
+    p:"Ahí están la mayor dispersión de exigencia del programa (±24,5 en Backend II) y siete de las dieciocho temáticas faltantes. Es la costura más suelta que dejó la ronda."},
+   {n:"05", t:"Preguntar en voz alta por qué al Nivel III se le pide menos que al Nivel I.",
+    p:"Nadie sostuvo eso en la reunión: apareció al sumar las respuestas. Puede ser realismo sobre el tiempo que queda al final del programa, o puede ser una renuncia. Vale la pena saber cuál de las dos."}
+  ];
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Qué se hace con esto</span>' +
+    "<h3>Lo que ya se puede decidir</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Las tres primeras salen de acuerdos ya medidos; las dos últimas, de las divergencias que quedaron abiertas.</p>' +
+    '<div style="margin-top:1.2rem">' +
+    decisiones.map(function(d){
+      return '<div class="par-fila"><div class="cab"><b>' + d.n + " · " + esc(d.t) + "</b></div>" +
+        '<p style="font-size:.93rem;color:var(--ink-soft);margin:.15rem 0 0">' + esc(d.p) + "</p></div>";
+    }).join("") + "</div></div>";
+
+  /* --- cómo leer estos números --- */
+  var notas = [
+   "Once registros anónimos. Diez se hicieron durante la reunión, " + RONDA.franja +
+     "; el restante, esa misma mañana, al probar el despliegue.",
+   "El instrumento no obliga a responderlo todo y la mayoría contestó a fondo por su propia materia. Por eso el bloque 1 de Lógica tiene 10 respuestas y las materias del Nivel III, 5. Donde hay cinco respuestas, la cifra señala; no demuestra.",
+   "«Dispersión» es la desviación estándar de las respuestas. En la escala de 0 a 100 el instrumento marca divergencia por encima de ±20 y acuerdo por debajo de ±10.",
+   "Dos personas respondieron el bloque 2 completo marcando «insumo» en las nueve materias. Ese patrón sostiene una parte del 68 %: el dato es firme en su dirección, no en su decimal.",
+   "Del paso 08 no hay lectura: solo dos personas marcaron acciones y nadie escribió en el campo libre. Eso quedó pendiente de la reunión; no es un resultado.",
+   "Ningún registro lleva nombre. El identificador es aleatorio y lo genera el navegador de cada quien."
+  ];
+  html += '<div class="panel-2" style="margin-top:1rem"><span class="eyebrow">Cómo leer estos números</span>' +
+    '<ul style="margin:.6rem 0 0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.45rem">' +
+    notas.map(function(t){
+      return '<li style="font-size:.92rem;color:var(--ink-soft);line-height:1.55">' + esc(t) + "</li>";
+    }).join("") + "</ul></div>";
+
+  c.innerHTML = html;
+}
+
+/* ═══════════ 07 · EVIDENCIA ═══════════ */
 
 /* Índices de alineación de cada materia (0-100), tomados del Observatorio Curricular.
    Cada dimensión es una suma ponderada calculada sobre el testeo con 8 empresas,
@@ -1808,7 +2122,7 @@ function montarEvidencia(){
   c.innerHTML = html;
 }
 
-/* ═══════════ 07 · CIERRE ═══════════ */
+/* ═══════════ 08 · CIERRE ═══════════ */
 
 function montarAcciones(){
   var c = el("acciones");
@@ -2063,6 +2377,7 @@ montarRequisitos();
 montarLiderazgo();
 montarMatriz();
 montarNiveles();
+montarRonda();
 montarEvidencia();
 montarAcciones();
 
