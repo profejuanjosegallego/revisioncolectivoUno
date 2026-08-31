@@ -1,0 +1,15 @@
+{
+  "name": "revision-conjunta-cesde",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Revisión conjunta del programa · colectivo docente del Técnico Laboral como Asistente en Desarrollo de Software · CESDE Medellín",
+  "scripts": {
+    "dev": "node dev-server.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.12.0"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}

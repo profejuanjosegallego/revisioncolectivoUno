@@ -1,0 +1,2041 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="Revisión conjunta del programa · colectivo docente CESDE Medellín">
+<title>Revisión Conjunta del Programa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="fuentes" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+<style id="css">
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+
+:root{
+  --ground:#F1EDF0;
+  --surface:#FFFFFF;
+  --surface-2:#F8F4F7;
+  --ink:#1A1418;
+  --ink-soft:#5C525A;
+  --ink-faint:#8B7F87;
+  --line:#DCD2D8;
+  --line-fuerte:#BFB1BA;
+  --acento:#B0176B;
+  --acento-tenue:#F7E6F0;
+  --diverge:#D4227E;
+  --diverge-tenue:#FBE7F1;
+  --converge:#1E6FB8;
+  --converge-tenue:#E4EDF8;
+  --ok:#1E6FB8;
+  --sombra:0 1px 2px rgba(26,20,24,.06);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#120E11;
+    --surface:#1B161A;
+    --surface-2:#231C21;
+    --ink:#EDE6EB;
+    --ink-soft:#A0939B;
+    --ink-faint:#776B73;
+    --line:#2E262C;
+    --line-fuerte:#453A42;
+    --acento:#F084BF;
+    --acento-tenue:#331023;
+    --diverge:#DE4F92;
+    --diverge-tenue:#33101F;
+    --converge:#4E96E0;
+    --converge-tenue:#0E1D2E;
+    --ok:#4E96E0;
+    --sombra:0 1px 2px rgba(0,0,0,.45);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#120E11;
+  --surface:#1B161A;
+  --surface-2:#231C21;
+  --ink:#EDE6EB;
+  --ink-soft:#A0939B;
+  --ink-faint:#776B73;
+  --line:#2E262C;
+  --line-fuerte:#453A42;
+  --acento:#F084BF;
+  --acento-tenue:#331023;
+  --diverge:#DE4F92;
+  --diverge-tenue:#33101F;
+  --converge:#4E96E0;
+  --converge-tenue:#0E1D2E;
+  --ok:#4E96E0;
+  --sombra:0 1px 2px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+h1,h2,h3,h4{
+  font-family:var(--sans);
+  font-weight:600;letter-spacing:-.015em;line-height:1.2;text-wrap:balance;margin:0;
+}
+h1{font-size:clamp(1.9rem,4.4vw,2.75rem);font-weight:600}
+h2{font-size:clamp(1.4rem,3vw,1.95rem)}
+h3{font-size:clamp(1.12rem,2.4vw,1.42rem);letter-spacing:-.012em}
+h4{font-size:1.02rem;letter-spacing:-.005em;font-weight:600}
+p{margin:0 0 1em}
+p:last-child{margin-bottom:0}
+a{color:var(--acento);text-underline-offset:.18em;text-decoration-thickness:1px}
+strong,b{font-weight:600}
+
+.mono,.eyebrow,.chip,.mini{font-family:var(--mono)}
+.eyebrow{font-size:.688rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:.75rem}
+.eyebrow .num{color:var(--acento)}
+.mini{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:.4rem}
+
+:focus-visible{outline:2px solid var(--acento);outline-offset:3px;border-radius:3px}
+
+/* ---------- estructura ---------- */
+.rail{position:fixed;left:0;top:0;bottom:0;width:236px;padding:2.5rem 0 2.5rem 1.75rem;display:none;flex-direction:column;z-index:40;background:linear-gradient(90deg,var(--ground) 70%,transparent)}
+.rail::before{content:"";position:absolute;left:2.06rem;top:3.4rem;bottom:3.4rem;width:1px;background:var(--line-fuerte)}
+.rail button{position:relative;display:flex;align-items:center;gap:.85rem;background:none;border:0;padding:.5rem 0;cursor:pointer;text-align:left;font-family:var(--mono);font-size:.7rem;letter-spacing:.04em;color:var(--ink-faint);flex:1;max-height:5rem}
+.rail button .nodo{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--line-fuerte);background:var(--ground);flex:none;transition:background .2s,border-color .2s,transform .2s}
+.rail button:hover{color:var(--ink)}
+.rail button[aria-current="true"]{color:var(--ink);font-weight:700}
+.rail button[aria-current="true"] .nodo{background:var(--acento);border-color:var(--acento);transform:scale(1.35)}
+.rail button.visto .nodo{background:var(--line-fuerte);border-color:var(--line-fuerte)}
+@media (min-width:1180px){.rail{display:flex}}
+
+.barra{position:sticky;top:0;z-index:30;background:var(--ground);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:.75rem;padding:.55rem 1.1rem;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.barra .pista{flex:1;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.barra .pista i{display:block;height:100%;background:var(--acento);width:0;transition:width .35s ease}
+@media (min-width:1180px){.barra{display:none}}
+
+main{max-width:78ch;margin:0 auto;padding:0 1.25rem 8rem}
+@media (min-width:1180px){main{margin-left:256px;margin-right:2rem;max-width:76ch}}
+@media (min-width:1520px){main{margin-left:auto;margin-right:auto}}
+
+.estacion{padding:4.5rem 0 1rem;scroll-margin-top:4rem}
+.estacion + .estacion{border-top:1px solid var(--line)}
+.estacion > * + *{margin-top:1.4rem}
+.lead{font-size:1.18rem;line-height:1.55;color:var(--ink-soft)}
+
+/* ---------- portada ---------- */
+.portada{padding-top:3.5rem;border-top:0}
+.portada .marca{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--acento);margin-bottom:2.5rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.portada .marca span{color:var(--ink-faint)}
+.cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:2.2rem}
+.cifras div{background:var(--surface);padding:1rem .9rem}
+.cifras b{display:block;font-family:var(--sans);font-size:1.65rem;letter-spacing:-.03em;line-height:1}
+.cifras span{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);margin-top:.45rem}
+
+/* ---------- bloques ---------- */
+.panel{background:var(--surface);border:1px solid var(--line);padding:1.5rem;box-shadow:var(--sombra)}
+.panel-2{background:var(--surface-2);border:1px solid var(--line);padding:1.3rem}
+.franja{border-left:3px solid var(--acento);padding:.15rem 0 .15rem 1.15rem}
+.franja.div{border-color:var(--diverge)}
+.franja.con{border-color:var(--converge)}
+.cita{font-style:italic;font-size:1.06rem;border-left:2px solid var(--line-fuerte);padding-left:1.1rem;margin:1.3rem 0}
+.cita cite{display:block;font-style:normal;font-family:var(--mono);font-size:.66rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);margin-top:.6rem}
+.fuente{font-family:var(--mono);font-size:.66rem;line-height:1.55;color:var(--ink-faint)}
+
+.chip{display:inline-flex;align-items:center;gap:.35rem;font-size:.63rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;border:1px solid var(--line-fuerte);color:var(--ink-soft);padding:.22rem .5rem;border-radius:2px;white-space:nowrap}
+.chip.ac{border-color:var(--acento);color:var(--acento);background:var(--acento-tenue)}
+.chip.dv{border-color:var(--diverge);color:var(--diverge);background:var(--diverge-tenue)}
+.chip.cv{border-color:var(--converge);color:var(--converge);background:var(--converge-tenue)}
+.chips{display:flex;flex-wrap:wrap;gap:.35rem}
+
+ul.limpia{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.55rem}
+ul.limpia li{padding-left:1.15rem;position:relative}
+ul.limpia li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:1px;background:var(--acento)}
+
+/* ---------- controles ---------- */
+.btn{font-family:var(--sans);font-weight:600;font-size:.9rem;background:var(--acento);color:var(--ground);border:1px solid var(--acento);padding:.62rem 1.15rem;border-radius:2px;cursor:pointer;transition:opacity .15s}
+.btn:hover{opacity:.87}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.fantasma{background:transparent;color:var(--ink);border-color:var(--line-fuerte)}
+.btn.fantasma:hover{border-color:var(--ink-soft)}
+.acciones{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-top:1.2rem}
+
+.opcion{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);padding:.85rem 1rem;cursor:pointer;font-family:var(--sans);font-size:1rem;line-height:1.45;transition:border-color .15s,background .15s}
+.opcion:hover{border-color:var(--line-fuerte);background:var(--surface-2)}
+.opcion + .opcion{margin-top:.45rem}
+.opcion .letra{font-family:var(--mono);font-size:.7rem;font-weight:700;color:var(--ink-faint);margin-right:.7rem}
+.opcion[data-on="1"]{border-color:var(--acento);background:var(--acento-tenue)}
+.opcion[data-on="1"] .letra{color:var(--acento)}
+
+.campo{display:flex;flex-direction:column;gap:.35rem;flex:1;min-width:170px}
+.campo label{font-family:var(--mono);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.campo input[type=text],.campo textarea{background:var(--surface);border:1px solid var(--line-fuerte);padding:.55rem .7rem;border-radius:2px;font-family:var(--sans);font-size:.98rem;width:100%}
+.campo textarea{min-height:4.6rem;resize:vertical;line-height:1.5}
+
+/* ---------- escala básico/avanzado ---------- */
+.escala-fila{display:grid;grid-template-columns:1fr;gap:.4rem;padding:.95rem 0;border-top:1px solid var(--line)}
+.escala-fila:first-child{border-top:0}
+.escala-fila .cab{display:flex;flex-wrap:wrap;gap:.5rem;align-items:baseline;justify-content:space-between}
+.escala-fila .cab b{font-family:var(--sans);font-size:.98rem}
+.escala-fila .que{font-size:.92rem;color:var(--ink-soft);line-height:1.45}
+.escala-fila .val{font-family:var(--mono);font-size:.7rem;color:var(--acento);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--acento);height:1.5rem;background:transparent;cursor:pointer}
+.polos{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+
+/* ---------- fichas de materia ---------- */
+.ficha{border:1px solid var(--line);background:var(--surface);margin-top:.8rem}
+.ficha > summary{cursor:pointer;list-style:none;padding:1rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start}
+.ficha > summary::-webkit-details-marker{display:none}
+.ficha > summary::before{content:"▸";color:var(--acento);font-size:.85rem;line-height:1.6}
+.ficha[open] > summary::before{content:"▾"}
+.ficha summary b{font-family:var(--sans);font-size:1.02rem;display:block}
+.ficha summary .que{font-size:.93rem;color:var(--ink-soft);line-height:1.45;display:block;margin-top:.15rem}
+.ficha .interior{padding:0 1.2rem 1.4rem;border-top:1px solid var(--line);margin-top:.2rem;padding-top:1.2rem}
+.hoy{background:var(--surface-2);border:1px solid var(--line);padding:.85rem 1rem;font-size:.95rem;line-height:1.5}
+
+/* ---------- gráficas ---------- */
+.grafica{overflow-x:auto}
+.disp-fila{display:grid;grid-template-columns:1fr;gap:.3rem;padding:.8rem 0;border-top:1px solid var(--line)}
+.disp-fila:first-child{border-top:0}
+.disp-fila .cab{display:flex;gap:.6rem;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+.disp-fila .cab b{font-family:var(--sans);font-size:.95rem}
+.disp-fila .tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .45rem;border:1px solid currentColor;border-radius:2px}
+.tag.alta{color:var(--diverge)}
+.tag.media{color:var(--acento)}
+.tag.baja{color:var(--converge)}
+.barras{display:flex;flex-direction:column;gap:.5rem}
+.barra-item{display:grid;grid-template-columns:minmax(84px,auto) 1fr auto;gap:.7rem;align-items:center;font-size:.9rem}
+.barra-item .pista{height:14px;background:var(--surface-2);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.barra-item .pista i{display:block;height:100%;border-radius:0 3px 3px 0}
+.barra-item .n{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.leyenda{display:flex;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-top:.9rem}
+.leyenda span{display:flex;align-items:center;gap:.4rem}
+.leyenda i{width:14px;height:10px;display:block;border-radius:2px}
+
+.tabla-envoltura{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.93rem;min-width:480px}
+th,td{text-align:left;padding:.65rem .8rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.61rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- MNC ---------- */
+.escala-mnc{display:flex;flex-direction:column-reverse;border:1px solid var(--line);background:var(--surface)}
+.escala-mnc .nvl{display:grid;grid-template-columns:2.6rem 1fr;gap:.9rem;padding:.7rem .9rem;border-top:1px solid var(--line);font-size:.92rem;line-height:1.45}
+.escala-mnc .nvl:first-child{border-top:0}
+.escala-mnc .nvl b{font-family:var(--mono);font-size:.76rem;color:var(--ink-faint);padding-top:.15rem}
+.escala-mnc .nvl.aqui{background:var(--acento-tenue)}
+.escala-mnc .nvl.aqui b{color:var(--acento);font-weight:700}
+.escala-mnc .et{display:inline-block;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--acento);border:1px solid var(--acento);padding:.1rem .35rem;margin-left:.5rem}
+
+/* ---------- ramas ---------- */
+.ramas{font-family:var(--mono);font-size:.7rem;line-height:1.9;background:var(--surface-2);border:1px solid var(--line);padding:.85rem 1rem;overflow-x:auto;white-space:pre;color:var(--ink-soft);margin-top:.7rem}
+.ramas b{color:var(--acento);font-weight:700}
+.ramas i{color:var(--converge);font-style:normal}
+
+/* ---------- facilitador ---------- */
+details.facilitador{border:1px dashed var(--line-fuerte);margin-top:1.5rem}
+details.facilitador > summary{cursor:pointer;list-style:none;padding:.6rem .9rem;font-family:var(--mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);display:flex;gap:.5rem;align-items:center}
+details.facilitador > summary::-webkit-details-marker{display:none}
+details.facilitador > summary::before{content:"▸";font-size:.8rem}
+details.facilitador[open] > summary::before{content:"▾"}
+details.facilitador .interior{padding:0 .9rem 1rem;font-size:.94rem;color:var(--ink-soft)}
+details.facilitador .interior > * + *{margin-top:.7rem}
+
+/* ---------- ES / NO ES ---------- */
+.afirmacion{border:1px solid var(--line);background:var(--surface);padding:1rem 1.15rem}
+.afirmacion + .afirmacion{margin-top:.6rem}
+.par{display:flex;gap:.5rem;margin-top:.8rem;flex-wrap:wrap}
+.par button{font-family:var(--mono);font-size:.67rem;font-weight:700;letter-spacing:.1em;background:transparent;border:1px solid var(--line-fuerte);color:var(--ink-soft);padding:.38rem .9rem;cursor:pointer;border-radius:2px}
+.par button:hover:not(:disabled){border-color:var(--ink-soft);color:var(--ink)}
+.par button[aria-pressed="true"]{border-color:var(--acento);color:var(--acento);background:var(--acento-tenue)}
+.par button:disabled{cursor:default;opacity:.8}
+.veredicto{margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--line);font-size:.94rem;line-height:1.55;color:var(--ink-soft)}
+.veredicto .et{font-family:var(--mono);font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:.3rem;color:var(--acento)}
+
+/* ---------- avisos ---------- */
+.aviso{display:flex;gap:.7rem;align-items:flex-start;border:1px solid var(--line-fuerte);background:var(--surface-2);padding:.8rem 1rem;font-size:.92rem;line-height:1.5;color:var(--ink-soft)}
+.aviso .pt{width:7px;height:7px;border-radius:50%;background:var(--ink-faint);flex:none;margin-top:.55em}
+.aviso.vivo .pt{background:var(--converge);box-shadow:0 0 0 3px var(--converge-tenue)}
+.aviso.solo .pt{background:var(--acento)}
+
+.accion{display:flex;gap:.7rem;align-items:flex-start;border:1px solid var(--line);background:var(--surface);padding:.72rem .9rem;cursor:pointer}
+.accion + .accion{margin-top:.45rem}
+.accion input{margin-top:.35em;accent-color:var(--acento);width:1rem;height:1rem;flex:none}
+.accion[data-on="1"]{border-color:var(--acento);background:var(--acento-tenue)}
+.accion .t{font-size:.97rem;line-height:1.45}
+.accion .cuenta{margin-left:auto;font-family:var(--mono);font-size:.67rem;color:var(--ink-faint);flex:none;padding-left:.6rem}
+
+.pie{margin-top:4rem;padding-top:2rem;border-top:1px solid var(--line);font-size:.9rem;color:var(--ink-soft)}
+.pie ol{padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem}
+.pie li{font-family:var(--mono);font-size:.67rem;line-height:1.6}
+
+.par-fila{display:grid;grid-template-columns:1fr;gap:.3rem;padding:.7rem 0;border-top:1px solid var(--line)}
+.par-fila:first-of-type{border-top:0;padding-top:0}
+.par-fila .cab{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+.par-fila .cab b{font-size:.94rem;font-weight:600}
+.par-fila .cif{font-family:var(--mono);font-size:.65rem;color:var(--ink-soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.dolor{border:1px solid var(--line);background:var(--surface);padding:1.05rem 1.15rem;box-shadow:var(--sombra)}
+.dolor + .dolor{margin-top:.6rem}
+.dolor .num{font-family:var(--mono);font-size:.61rem;letter-spacing:.12em;text-transform:uppercase;color:var(--diverge);display:block;margin-bottom:.35rem}
+.dolor h4{margin-bottom:.45rem}
+.dolor p{font-size:.95rem;color:var(--ink-soft);margin:0;line-height:1.5}
+.dolor .dato{font-family:var(--mono);font-size:.68rem;line-height:1.5;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);padding:.4rem .65rem;display:inline-block;margin-top:.75rem}
+
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+
+/* ---------- instrumento v3 ---------- */
+.bloque-materia{border:1px solid var(--line);background:var(--surface);padding:1.15rem 1.2rem;box-shadow:var(--sombra)}
+.bloque-materia + .bloque-materia{margin-top:.75rem}
+.bloque-materia > .cab{display:flex;gap:.55rem;align-items:baseline;flex-wrap:wrap;margin-bottom:.3rem}
+.bloque-materia > .cab b{font-family:var(--sans);font-size:1.04rem;letter-spacing:-.012em;line-height:1.25}
+.bloque-materia > .sub{font-size:.9rem;color:var(--ink-soft);line-height:1.5;margin:0}
+.bloque-materia .paso{margin-top:1.3rem}
+.bloque-materia .paso > .mini{display:block;margin-bottom:.5rem}
+
+.campo label.fila{display:flex;justify-content:space-between;align-items:baseline;gap:.8rem}
+.contador{font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;color:var(--ink-faint);flex:none;text-transform:none}
+.contador.cerca{color:var(--acento)}
+.campo textarea.corta{min-height:4rem}
+
+.fila-grado{display:grid;grid-template-columns:1fr auto;gap:.45rem .9rem;align-items:center;padding:.55rem 0;border-top:1px solid var(--line)}
+.fila-grado:first-of-type{border-top:0;padding-top:0}
+.fila-grado .nm{font-size:.94rem;line-height:1.35}
+.fila-grado .nm i{display:block;font-style:normal;font-family:var(--mono);font-size:.6rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.1em;margin-top:.15rem}
+.grados{display:flex;gap:.2rem;flex-wrap:wrap}
+.grados button{font-family:var(--mono);font-size:.61rem;letter-spacing:.06em;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);padding:.42rem .5rem;cursor:pointer;text-transform:uppercase;line-height:1}
+.grados button:hover{border-color:var(--line-fuerte)}
+.grados button[aria-pressed="true"]{background:var(--acento);border-color:var(--acento);color:#fff}
+@media (max-width:640px){.fila-grado{grid-template-columns:1fr}.grados{margin-top:.15rem}}
+
+.mapa{width:100%;border-collapse:separate;border-spacing:3px;font-size:.8rem}
+.mapa th{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-faint);font-weight:500;text-align:center;padding:.25rem .1rem;vertical-align:bottom}
+.mapa th.mat{text-align:left;font-family:var(--sans);font-size:.82rem;font-weight:500;text-transform:none;letter-spacing:-.005em;color:var(--ink);width:42%;padding-right:.5rem;line-height:1.3}
+.mapa th:not(.mat){width:19.3%}
+.mapa td{text-align:center;padding:.6rem .3rem;font-family:var(--mono);font-size:.7rem;background:var(--surface-2);white-space:nowrap}
+.mapa td.disperso{outline:2px solid var(--diverge);outline-offset:-2px}
+
+.pastilla{display:inline-block;font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.09em;padding:.18rem .42rem;border:1px solid var(--line-fuerte);color:var(--ink-soft);white-space:nowrap}
+.pastilla.integra{border-color:var(--converge);color:var(--converge);background:var(--converge-tenue)}
+.pastilla.suelta{border-color:var(--diverge);color:var(--diverge);background:var(--diverge-tenue)}
+
+.rejilla-niv{display:grid;gap:.7rem}
+@media (min-width:900px){.rejilla-niv{grid-template-columns:repeat(3,1fr)}}
+.paso-num{display:inline-flex;align-items:center;justify-content:center;width:1.35rem;height:1.35rem;border:1px solid var(--line-fuerte);font-family:var(--mono);font-size:.66rem;color:var(--ink-soft);flex:none}
+</style>
+
+</head>
+<body>
+<template id="src">
+
+<nav class="rail" aria-label="Bloques de la revisión" id="rail"></nav>
+
+<div class="barra">
+  <span id="barraEtq">Paso 00</span>
+  <span class="pista"><i id="barraPista"></i></span>
+  <span id="barraNum">0/7</span>
+</div>
+
+<main>
+
+<!-- ═══════ 00 · PORTADA ═══════ -->
+<section class="estacion portada" id="e0" data-titulo="Punto de partida">
+  <p class="marca">Observatorio Curricular · CESDE Medellín <span>/</span> Técnico Laboral como Asistente en Desarrollo de Software</p>
+
+  <h1>Diagnostiquemos juntos</h1>
+
+  <p class="lead" style="margin-top:1.6rem">Tres bloques de preguntas sobre las nueve materias. Nadie se identifica, nadie firma y no hay respuestas correctas. Al final, el tablero muestra en qué estamos de acuerdo y en qué no.</p>
+
+  <div class="panel franja" style="margin-top:2rem">
+    <h3 style="margin-bottom:.9rem">Lo que se pregunta</h3>
+    <p style="display:flex;gap:.7rem;align-items:flex-start"><span class="paso-num">1</span><span><b>Cómo ves cada materia.</b> El objetivo central de cada una en una frase de máximo 140 caracteres, y hasta dónde debería llegar el estudiante.</span></p>
+    <p style="display:flex;gap:.7rem;align-items:flex-start"><span class="paso-num">2</span><span><b>Qué haría tu materia con un caso concreto.</b> Un problema de reciclaje y una aplicación para resolverlo.</span></p>
+    <p style="display:flex;gap:.7rem;align-items:flex-start;margin-bottom:0"><span class="paso-num">3</span><span><b>Qué cabe hoy de tres prácticas transversales.</b> Control de versiones, auditoría de código con IA, y DevOps y cloud.</span></p>
+  </div>
+
+  <div class="cifras">
+    <div><b>9</b><span>materias</span></div>
+    <div><b>3</b><span>bloques</span></div>
+    <div><b>140</b><span>caracteres por frase</span></div>
+    <div><b>0</b><span>nombres pedidos</span></div>
+  </div>
+
+  <div id="avisoConexion" class="aviso" style="margin-top:1.5rem"><span class="pt"></span><span id="avisoTexto">Conectando con el tablero del colectivo…</span></div>
+
+  <div class="acciones">
+    <button class="btn" id="btnEmpezar">Empezar</button>
+  </div>
+
+  <details class="facilitador">
+    <summary>Guía rápida · 70 minutos</summary>
+    <div class="interior">
+      <p><b>Reparto del tiempo:</b> el caso 5 min · bloque 1, las materias 20 min · bloque 2, el integrador 12 min · bloque 3, prácticas transversales 10 min · el tablero 13 min · la evidencia 10 min.</p>
+      <p><b>Regla que conviene decir en voz alta:</b> nadie escribe su nombre, nadie ve la respuesta de otro. Solo se proyecta el resultado del grupo.</p>
+      <p><b>Reparto sugerido:</b> cada quien responde primero su materia y luego las otras dos de su nivel. Nueve fichas por persona vuelve las respuestas de relleno, y eso es justo lo que arruina el análisis de términos.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════ 01 · EL CASO ═══════ -->
+<section class="estacion" id="e1" data-titulo="El caso">
+  <span class="eyebrow"><span class="num">Paso 01</span> · El caso de trabajo</span>
+  <h2>Los residuos del barrio</h2>
+
+  <p class="lead">Un problema concreto sobre la mesa. Es el tipo de caso que un proyecto integrador usaría durante todo un nivel, y es el que vas a usar en el bloque 2.</p>
+
+  <div class="panel">
+    <p class="fuente" style="margin-bottom:.9rem">CASO DE TRABAJO · MEDELLÍN · COOPERATIVA DE 34 RECICLADORES DE OFICIO · 4 BARRIOS</p>
+    <p><b>Una cooperativa de recicladores de oficio</b> del nororiente de Medellín recoge material aprovechable en cuatro barrios. La coordinadora lo dice así: «necesitamos una aplicación para el reciclaje».</p>
+    <p>Cuando uno pregunta un poco más, aparece lo que hay detrás:</p>
+    <ul class="limpia" style="margin-top:.9rem">
+      <li>Cada reciclador anota en una libreta cuántos kilos recogió y de qué material. A fin de mes las cuentas no cuadran y el pago se reparte «como se pueda».</li>
+      <li>Los vecinos no saben qué día pasa la ruta ni qué material se recibe, así que buena parte de lo que sacan llega contaminado y se pierde.</li>
+      <li>La cooperativa le vende a tres compradores distintos y no sabe cuál paga mejor cada material.</li>
+      <li>Para seguir recibiendo apoyo del municipio hay que reportar cuántas toneladas se desviaron del relleno sanitario, y ese dato hoy no existe.</li>
+      <li>Cuando entra un reciclador nuevo, nadie sabe con qué criterio se le asigna una ruta.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════ 02 · BLOQUE 1 ═══════ -->
+<section class="estacion" id="e2" data-titulo="Las materias">
+  <span class="eyebrow"><span class="num">Paso 02</span> · Bloque 1</span>
+  <h2>Cómo ves cada materia</h2>
+
+  <p class="lead">Dos preguntas por materia: el objetivo central en una frase corta, y hasta dónde debería llegar el estudiante. Responde al menos la tuya y las otras dos de tu nivel.</p>
+
+  <div id="materias" style="margin-top:1.5rem"></div>
+</section>
+
+<!-- ═══════ 03 · BLOQUE 2 ═══════ -->
+<section class="estacion" id="e3" data-titulo="El integrador">
+  <span class="eyebrow"><span class="num">Paso 03</span> · Bloque 2</span>
+  <h2>Qué haría tu materia con el caso</h2>
+
+  <p class="lead">Vuelve al caso de la cooperativa de reciclaje. Para cada materia, marca la opción que más se parece a lo que harías. No hay opción correcta: lo que se mide es cómo concebimos el proyecto integrador.</p>
+
+  <div id="caso" style="margin-top:1.5rem"></div>
+
+  <div class="panel" style="margin-top:1.8rem">
+    <span class="eyebrow" style="margin-bottom:.5rem">La pregunta de fondo</span>
+    <h3>¿Qué tiene que existir para que esto sea un integrador y no tres trabajos con la misma fecha?</h3>
+    <p style="font-size:.96rem;color:var(--ink-soft);margin-top:.6rem">Marca todo lo que consideres imprescindible.</p>
+    <div id="requisitos" style="margin-top:1.1rem"></div>
+    <div id="resultadoReq" hidden></div>
+  </div>
+
+  <h3 style="margin-top:2.4rem">Y en cada nivel, ¿quién lleva la batuta?</h3>
+  <p style="font-size:.98rem;color:var(--ink-soft)">Una respuesta por nivel. Tres clics.</p>
+  <div id="liderazgo" style="margin-top:1.1rem"></div>
+</section>
+
+<!-- ═══════ 04 · BLOQUE 3 ═══════ -->
+<section class="estacion" id="e4" data-titulo="Prácticas transversales">
+  <span class="eyebrow"><span class="num">Paso 04</span> · Bloque 3</span>
+  <h2>Git, auditoría con IA, DevOps y cloud</h2>
+
+  <p class="lead">Tres prácticas que atraviesan el programa entero. Primero, dónde caben hoy materia por materia; después, qué alcance le corresponde a cada nivel.</p>
+
+  <div class="panel franja" style="margin-top:1.5rem">
+    <p style="margin-bottom:0">Marca el grado en que <b>cada práctica cabe hoy en cada materia</b>. Es un mapa del estado actual, no de lo que debería ser: lo que se busca es ver si lo vemos igual. Son 27 marcas de un clic.</p>
+  </div>
+
+  <div id="matriz" style="margin-top:1.5rem"></div>
+
+  <h3 style="margin-top:2.4rem">Qué alcance le corresponde a cada nivel</h3>
+  <p style="font-size:.98rem;color:var(--ink-soft)">Tres preguntas por nivel, una por práctica. Aquí sí se pregunta por lo que debería ser.</p>
+  <div id="niveles" style="margin-top:1.2rem"></div>
+</section>
+
+<!-- ═══════ 05 · DIVERGENCIAS ═══════ -->
+<section class="estacion" id="e5" data-titulo="Dónde divergimos">
+  <span class="eyebrow"><span class="num">Paso 05</span> · El resultado</span>
+  <h2>Dónde divergimos</h2>
+
+  <p class="lead">Todo lo que respondió el colectivo, leído de una sola forma: qué tan repartidas están las respuestas. Lo magenta señala dispersión; lo azul, acuerdo.</p>
+
+  <div class="acciones" style="margin-top:1.2rem">
+    <button class="btn" id="btnAnalizar">Analizar las respuestas del colectivo</button>
+    <span class="fuente" id="estadoAnalisis"></span>
+  </div>
+
+  <div id="analisis" style="margin-top:1.5rem"></div>
+</section>
+
+<!-- ═══════ 06 · EVIDENCIA ═══════ -->
+<section class="estacion" id="e6" data-titulo="Por qué alinear">
+  <span class="eyebrow"><span class="num">Paso 06</span> · La evidencia</span>
+  <h2>Por qué esto importa</h2>
+
+  <p class="lead">Cinco fuentes externas ya midieron el programa. Esto es lo que encontraron.</p>
+
+  <div id="evidencia" style="margin-top:1.5rem"></div>
+</section>
+
+<!-- ═══════ 07 · CIERRE ═══════ -->
+<section class="estacion" id="e7" data-titulo="Cierre">
+  <span class="eyebrow"><span class="num">Paso 07</span> · Cierre</span>
+  <h2>Qué hacemos con las diferencias</h2>
+
+  <p class="lead">Una divergencia medida y no atendida vuelve igual el próximo semestre. Marca las acciones que te parecen necesarias; el tablero muestra cuántas personas coinciden en cada una.</p>
+
+  <div id="acciones" style="margin-top:1.5rem"></div>
+
+  <div class="panel" style="margin-top:1.2rem">
+    <div class="campo">
+      <label for="inLibre">Lo que esta revisión no preguntó y hay que decir</label>
+      <textarea id="inLibre" placeholder="Desacuerdos, condiciones, riesgos, lo que falta. Queda anónimo y entra en el acta."></textarea>
+    </div>
+    <div class="acciones">
+      <button class="btn" id="btnCerrar">Registrar</button>
+      <button class="btn fantasma" id="btnExportar">Descargar el acta</button>
+    </div>
+    <div id="estadoCierre" class="fuente" style="margin-top:.8rem"></div>
+  </div>
+
+  <div id="tableroFinal" style="margin-top:1.2rem"></div>
+
+  <div class="pie">
+    <p style="margin-top:1.5rem;font-size:.85rem">Revisión conjunta del colectivo docente del Técnico Laboral como Asistente en Desarrollo de Software · CESDE Medellín. Las respuestas son anónimas y quedan en el acta descargable.</p>
+  </div>
+</section>
+
+</main>
+</template>
+
+<div id="app"></div>
+<script id="estado" type="application/json">{"v":3,"participantes":{}}</script>
+<script id="appjs">
+(function(){
+"use strict";
+
+/* ═══════════ DATOS ═══════════ */
+
+var TOPE = 140;
+var PELDANOS = [0, 25, 50, 75, 100];
+
+var TIPOS = {
+  propio:   {n:"Ejercicio propio con el mismo tema", c:"suelta"},
+  insumo:   {n:"Produce o consume un insumo de otra materia", c:"integra"},
+  paralelo: {n:"Entrega aparte, en la misma fecha", c:"suelta"},
+  capa:     {n:"Construye una capa del mismo producto", c:"integra"},
+  fuera:    {n:"El caso no aplica a la materia", c:"suelta"}
+};
+var ORDEN_TIPOS = ["capa", "insumo", "propio", "paralelo", "fuera"];
+
+var MATERIAS = [
+{slug:"logica", nombre:"Lógica de Programación", nivel:"I",
+ hoy:"Pseudocódigo y un programa por consola en Java con un CRUD básico sobre arreglos.",
+ enc:["Reproducir algoritmos ya resueltos siguiendo un modelo dado.",
+      "Traducir un enunciado a pseudocódigo y verificarlo con prueba de escritorio.",
+      "Diseñar el algoritmo de un caso real e implementarlo en un lenguaje.",
+      "Comparar dos soluciones posibles para el mismo problema y justificar la que elige.",
+      "Resolver ejercicios de estructuras de datos al nivel de una prueba técnica de empresa."],
+ caso:[{t:"Practico algoritmos con ejemplos de reciclaje, sin depender de lo que hagan las otras materias.", k:"propio"},
+       {t:"Entrego el algoritmo del proceso de recolección y ese algoritmo lo usan después las otras materias.", k:"insumo"},
+       {t:"Entrego mi trabajo final por separado, en la misma fecha que las otras materias.", k:"paralelo"},
+       {t:"Construyo el programa de consola que ya es una versión funcional del caso.", k:"capa"},
+       {t:"Con este caso no alcanzo a cubrir lo que mi materia tiene que enseñar.", k:"fuera"}]},
+
+{slug:"intro", nombre:"Introducción a la Programación", nivel:"I",
+ hoy:"Maqueta en HTML y CSS una web para el caso del proyecto.",
+ enc:["Copiar una maqueta dada y cambiarle textos e imágenes.",
+      "Maquetar en HTML semántico una pantalla a partir de un boceto.",
+      "Diseñar y maquetar con CSS propio las pantallas del caso, con Flexbox y Grid.",
+      "Justificar sus decisiones de interfaz frente a la necesidad real del usuario.",
+      "Entregar una interfaz responsive y accesible, al nivel de un producto publicado."],
+ caso:[{t:"Practico HTML y CSS con ejemplos de reciclaje, sin conectarme con las otras materias.", k:"propio"},
+       {t:"Diseño las pantallas a partir del modelo de datos que define Bases de Datos.", k:"insumo"},
+       {t:"Entrego mi maqueta por separado, en la misma fecha que las otras materias.", k:"paralelo"},
+       {t:"Maqueto la aplicación completa del caso: es la cara visible del producto del nivel.", k:"capa"},
+       {t:"Con este caso no alcanzo a cubrir lo que mi materia tiene que enseñar.", k:"fuera"}]},
+
+{slug:"bd", nombre:"Gestión de Bases de Datos", nivel:"I",
+ hoy:"Modelo entidad-relación del caso e implementación en SQL.",
+ enc:["Ejecutar consultas SQL ya escritas sobre una base que ya existe.",
+      "Construir el modelo entidad-relación de un enunciado dado.",
+      "Modelar, normalizar e implementar en SQL la base de datos del caso.",
+      "Sustentar por qué su modelo soporta las preguntas que el negocio necesita responder.",
+      "Optimizar consultas, índices y procedimientos como en una base en producción."],
+ caso:[{t:"Modelo bases de datos con ejemplos de reciclaje, sin coordinarme con las otras materias.", k:"propio"},
+       {t:"Defino el modelo de datos del caso y ese modelo es el punto de partida de las otras dos materias.", k:"insumo"},
+       {t:"Entrego mi modelo por separado, en la misma fecha que las otras materias.", k:"paralelo"},
+       {t:"Implemento la base con los datos reales del caso y sobre ella se monta todo lo demás.", k:"capa"},
+       {t:"Con este caso no alcanzo a cubrir lo que mi materia tiene que enseñar.", k:"fuera"}]},
+
+{slug:"agiles", nombre:"Metodologías Ágiles", nivel:"II",
+ hoy:"Monta las historias de usuario del proyecto.",
+ enc:["Conocer el vocabulario de Scrum y el nombre de sus ceremonias.",
+      "Escribir historias de usuario a partir de un requerimiento ya redactado.",
+      "Levantar el backlog del caso con criterios de aceptación y priorizarlo.",
+      "Conducir sprints reales del equipo y sostener las ceremonias durante el semestre.",
+      "Medir el avance del equipo y ajustar la planeación con esos datos."],
+ caso:[{t:"Practico historias de usuario con ejemplos de reciclaje, sin conectarme con las otras materias.", k:"propio"},
+       {t:"Levanto el backlog del caso y de ahí sale el trabajo de Backend y de Frontend.", k:"insumo"},
+       {t:"Entrego mi documentación por separado, en la misma fecha que las otras materias.", k:"paralelo"},
+       {t:"Dirijo el proyecto: el caso avanza al ritmo de los sprints que montamos.", k:"capa"},
+       {t:"Con este caso no alcanzo a cubrir lo que mi materia tiene que enseñar.", k:"fuera"}]},
+
+{slug:"backend1", nombre:"Backend I", nivel:"II",
+ hoy:"POO en Java: clases según el modelo del problema y conexión a la base de datos con JDBC.",
+ enc:["Modificar clases de Java ya escritas siguiendo un instructivo.",
+      "Escribir clases con atributos y métodos a partir de un diagrama dado.",
+      "Modelar el dominio del caso en clases y conectarlo a la base de datos.",
+      "Aplicar herencia, interfaces y separación de responsabilidades con criterio propio.",
+      "Persistir con un ORM y probar la lógica de negocio, como en un equipo de producto."],
+ caso:[{t:"Practico POO con ejemplos de reciclaje, sin depender de lo que hagan las otras materias.", k:"propio"},
+       {t:"Construyo las clases del caso a partir del modelo de datos y del backlog que ya existen.", k:"insumo"},
+       {t:"Entrego mi programa por separado, en la misma fecha que las otras materias.", k:"paralelo"},
+       {t:"Construyo el motor de la aplicación: sin él no hay producto que entregar.", k:"capa"},
+       {t:"Con este caso no alcanzo a cubrir lo que mi materia tiene que enseñar.", k:"fuera"}]},
+
+{slug:"frontend1", nombre:"Frontend I", nivel:"II",
+ hoy:"Uso del DOM y de localStorage sobre el caso del proyecto.",
+ enc:["Modificar un script de JavaScript ya escrito.",
+      "Manipular el DOM y responder a eventos dentro de una página dada.",
+      "Construir en pantalla el CRUD del caso y persistirlo en el navegador.",
+      "Consumir datos con funciones asíncronas y manejar los estados de la interfaz.",
+      "Conectar con el backend real del equipo y resolver carga y errores como en producción."],
+ caso:[{t:"Practico DOM y eventos con ejemplos de reciclaje, sin conectarme con las otras materias.", k:"propio"},
+       {t:"Construyo la interfaz consumiendo lo que expone el equipo de Backend.", k:"insumo"},
+       {t:"Entrego mi interfaz por separado, en la misma fecha que las otras materias.", k:"paralelo"},
+       {t:"Construyo la aplicación que el reciclador y el vecino realmente usan.", k:"capa"},
+       {t:"Con este caso no alcanzo a cubrir lo que mi materia tiene que enseñar.", k:"fuera"}]},
+
+{slug:"backend2", nombre:"Backend II", nivel:"III",
+ hoy:"API con Spring Boot.",
+ enc:["Ejecutar y probar una API que ya está construida.",
+      "Exponer un CRUD con Spring Boot siguiendo un ejemplo guiado.",
+      "Diseñar e implementar la API del caso con los verbos completos y validaciones.",
+      "Documentar el contrato de la API y sostenerlo para que otros equipos lo consuman.",
+      "Asegurar la API y probarla de forma automática, como un servicio en producción."],
+ caso:[{t:"Practico APIs con ejemplos de reciclaje, sin coordinarme con las otras materias.", k:"propio"},
+       {t:"Publico el contrato de la API y con eso trabajan Frontend y Nuevas Tecnologías.", k:"insumo"},
+       {t:"Entrego mi API por separado, en la misma fecha que las otras materias.", k:"paralelo"},
+       {t:"Construyo el servicio central del caso: el proyecto no avanza sin él.", k:"capa"},
+       {t:"Con este caso no alcanzo a cubrir lo que mi materia tiene que enseñar.", k:"fuera"}]},
+
+{slug:"frontend2", nombre:"Frontend II", nivel:"III",
+ hoy:"Aplicación de página única con React.",
+ enc:["Modificar componentes de React ya construidos.",
+      "Construir componentes y manejar estado siguiendo un ejemplo guiado.",
+      "Construir la aplicación del caso con navegación por rutas y consumo de la API.",
+      "Resolver los estados de carga, error y vacío, y sostener el diseño responsive.",
+      "Desplegar en línea y responder por la experiencia de uso del producto entregado."],
+ caso:[{t:"Practico React con ejemplos de reciclaje, sin depender de las otras materias.", k:"propio"},
+       {t:"Construyo la aplicación consumiendo la API que publica el equipo de Backend.", k:"insumo"},
+       {t:"Entrego mi aplicación por separado, en la misma fecha que las otras materias.", k:"paralelo"},
+       {t:"Construyo el producto que finalmente se le entrega a la cooperativa.", k:"capa"},
+       {t:"Con este caso no alcanzo a cubrir lo que mi materia tiene que enseñar.", k:"fuera"}]},
+
+{slug:"nuevastec", nombre:"Nuevas Tecnologías de Programación", nivel:"III",
+ hoy:"Analítica de datos con Python y Pandas.",
+ enc:["Leer un archivo de datos y mostrarlo siguiendo instrucciones dadas.",
+      "Limpiar y agrupar datos con Pandas siguiendo un ejemplo guiado.",
+      "Hacer el análisis exploratorio de los datos del caso y visualizarlo.",
+      "Convertir el análisis en recomendaciones defendibles frente al cliente.",
+      "Sostener el flujo completo de datos del producto, desde la fuente hasta el tablero."],
+ caso:[{t:"Practico Pandas con datos de reciclaje bajados de internet, sin conectarme con el equipo.", k:"propio"},
+       {t:"Analizo los datos que produce la aplicación del caso y devuelvo hallazgos al equipo.", k:"insumo"},
+       {t:"Entrego mi reporte por separado, en la misma fecha que las otras materias.", k:"paralelo"},
+       {t:"Entrego el tablero con el que la cooperativa le reporta al municipio.", k:"capa"},
+       {t:"Con este caso no alcanzo a cubrir lo que mi materia tiene que enseñar.", k:"fuera"}]}
+];
+
+var REQUISITOS = [
+ {id:"r1", t:"Un mismo caso para las tres materias del nivel."},
+ {id:"r2", t:"Un artefacto que una materia produce y otra consume: el modelo de datos, el backlog o el contrato de la API."},
+ {id:"r3", t:"Una fecha de entrega común."},
+ {id:"r4", t:"Un documento donde el equipo explique cómo se conectan las tres partes."},
+ {id:"r5", t:"Una materia que lidere y coordine a las otras dos."},
+ {id:"r6", t:"Una rúbrica única para las tres materias."},
+ {id:"r7", t:"Un mismo equipo de estudiantes en las tres materias."},
+ {id:"r8", t:"Nada especial: con que el tema sea el mismo, ya es integrador."}
+];
+
+var LIDERAZGO = [
+ {id:"n1", nivel:"Nivel I", pregunta:"¿Qué materia debería liderar el proyecto en el Nivel I?",
+  ops:["Lógica de Programación", "Introducción a la Programación", "Gestión de Bases de Datos", "Ninguna: las tres en paralelo, sin líder"]},
+ {id:"n2", nivel:"Nivel II", pregunta:"¿Y en el Nivel II?",
+  ops:["Metodologías Ágiles", "Backend I", "Frontend I", "Ninguna: las tres en paralelo, sin líder"]},
+ {id:"n3", nivel:"Nivel III", pregunta:"¿Y en el Nivel III?",
+  ops:["Backend II", "Frontend II", "Nuevas Tecnologías de Programación", "Ninguna: las tres en paralelo, sin líder"]}
+];
+
+var PRACTICAS = [
+ {k:"git", n:"Git, GitHub y GitFlow", c:"Git", d:"Repositorio, commits, ramas, integración y versiones."},
+ {k:"ia",  n:"Auditoría de código con IA", c:"IA", d:"Revisar con IA el código propio y el del equipo, y sustentar qué se acepta y qué se descarta."},
+ {k:"ops", n:"DevOps y cloud computing", c:"Cloud", d:"Entornos, despliegue, automatización y servicios en la nube."}
+];
+
+var GRADOS = [
+ {c:"No cabe",  t:"No cabe en mi materia"},
+ {c:"Mención",  t:"Se menciona, pero no se practica"},
+ {c:"Práctica", t:"Se practica"},
+ {c:"Se evalúa", t:"Se practica y además se evalúa"}
+];
+
+var NIVELES = [
+ {n:"I", t:"Nivel I", ms:["logica", "intro", "bd"], preguntas:[
+   {k:"git", q:"¿Qué alcance de control de versiones le corresponde al Nivel I?",
+    ops:["Ninguno: el estudiante todavía no tiene con qué.",
+         "Solo saber que existe y para qué sirve.",
+         "Repositorio propio, commits con mensaje claro y sincronización, en una sola rama.",
+         "Repositorio compartido del equipo, con una rama por integrante."]},
+   {k:"ia", q:"¿Qué papel debería tener la IA en el Nivel I?",
+    ops:["Ninguno: primero hay que aprender a resolver sin ella.",
+         "Consulta puntual, con la regla de declarar cuándo se usó.",
+         "Revisora: el estudiante escribe, la IA señala y el estudiante decide y sustenta.",
+         "Par de trabajo desde el primer día, con criterio de auditoría explícito."]},
+   {k:"ops", q:"¿Qué de DevOps y cloud le corresponde al Nivel I?",
+    ops:["Nada.",
+         "Entender qué es un servidor y qué significa que algo esté «en la nube».",
+         "Publicar la maqueta en línea, con una dirección pública que el cliente pueda abrir.",
+         "Separar entorno de desarrollo y de publicación, con sus propias variables."]}
+ ]},
+ {n:"II", t:"Nivel II", ms:["agiles", "backend1", "frontend1"], preguntas:[
+   {k:"git", q:"¿Y en el Nivel II?",
+    ops:["Sigue sin ser necesario.",
+         "Repositorio del equipo con una sola rama compartida.",
+         "Una rama por historia de usuario, con revisión antes de integrar.",
+         "GitFlow completo, con ramas de entrega y de corrección."]},
+   {k:"ia", q:"¿Y el papel de la IA en el Nivel II?",
+    ops:["Ninguno.",
+         "Consulta puntual para desatascarse.",
+         "Auditoría del código del equipo antes de integrarlo al proyecto.",
+         "Auditoría obligatoria, con evidencia de qué se aceptó y qué se rechazó."]},
+   {k:"ops", q:"¿Y de DevOps y cloud en el Nivel II?",
+    ops:["Nada.",
+         "Conocer la diferencia entre entorno de desarrollo y de producción.",
+         "Publicar el frontend en línea y conectarlo con un backend local.",
+         "Automatizar la publicación cada vez que el equipo integra."]}
+ ]},
+ {n:"III", t:"Nivel III", ms:["backend2", "frontend2", "nuevastec"], preguntas:[
+   {k:"git", q:"¿Y en el Nivel III?",
+    ops:["Lo que hay hoy: GitFlow enseñado desde cero en la semana 6.",
+         "GitFlow, pero llegando ya con el hábito de ramificar desde los niveles anteriores.",
+         "GitFlow más etiquetas de versión y revisión por pares obligatoria.",
+         "Un flujo más simple de entrega continua, más cercano a lo que usa hoy el sector."]},
+   {k:"ia", q:"¿Y el papel de la IA en el Nivel III?",
+    ops:["Ninguno.",
+         "Auditoría del código propio antes de entregar.",
+         "Auditoría cruzada entre equipos, con informe de hallazgos.",
+         "Integrada al flujo: nada entra al proyecto sin revisión asistida y sustentada."]},
+   {k:"ops", q:"¿Y de DevOps y cloud en el Nivel III?",
+    ops:["Nada.",
+         "Desplegar la aplicación en un servicio gratuito y dejarla en línea.",
+         "Contenedores y variables de entorno separadas por ambiente.",
+         "Integración y despliegue automáticos desde el repositorio."]}
+ ]}
+];
+
+var ACCIONES = [
+ {id:"a1", t:"Fijar el caso del proyecto de cada nivel antes de la semana 3."},
+ {id:"a2", t:"Acordar por nivel quién lidera y cuál es el insumo concreto que conecta a las tres materias."},
+ {id:"a3", t:"Escribir en una sola frase el objetivo de cada materia y dejarlo publicado donde todos lo vean."},
+ {id:"a4", t:"Dedicar una sesión propia a las materias que aparezcan con mayor divergencia."},
+ {id:"a5", t:"Definir desde qué nivel entra el control de versiones y con qué alcance."},
+ {id:"a6", t:"Fijar una regla común del colectivo sobre el uso y la auditoría de código con IA."},
+ {id:"a7", t:"Decidir qué de DevOps y cloud entra, en qué materia y en qué nivel."},
+ {id:"a8", t:"Ninguna todavía: primero quiero dejar por escrito mi desacuerdo o mis condiciones."}
+];
+
+var VACIAS = ("de la el los las un una unos unas y o u a en que se por con para del al lo su sus es son ser esta estan este esta estos estas como mas pero si no ni le les nos me mi tu te ya muy sin sobre entre cuando donde cual cuales quien porque desde hasta hacia tambien todo toda todos todas otro otra otros otras cada uno dos tres mismo misma sea sean hay ha han he hemos debe deben debemos puede pueden podemos tiene tienen tenemos hacer haga hace hacen asi solo bien mejor menos ademas segun cuanto cuanta sino aunque sera seran fue fueron eso esto aquel esa ese esas esos algo alguna algunas algun algunos nada nadie sino").split(" ");
+
+/* ═══════════ ESTADO ═══════════ */
+
+var CLAVE = "ct_revision_v3";
+var app = document.getElementById("app");
+var TRANSPORTE = null, publicando = false, temporizador = null;
+var analisisPintado = false, fallosSeguidos = 0;
+
+/* Si la página se sirve desde el Observatorio, el tablero vive en su API.
+   Dentro del artifact esa ruta no responde y se usa la capability. */
+var RUTA_API = "/api/revision";
+var SESION = (function(){
+  try {
+    var m = /[?&]sesion=([A-Za-z0-9_-]{1,40})/.exec(location.search);
+    return m ? m[1] : "2026-08";
+  } catch(e){ return "2026-08"; }
+})();
+
+function leerCompartido(){
+  try { return JSON.parse(document.getElementById("estado").textContent) || {v:3, participantes:{}}; }
+  catch(e){ return {v:3, participantes:{}}; }
+}
+var compartido = leerCompartido();
+if(!compartido.participantes) compartido.participantes = {};
+
+var yo;
+try { yo = JSON.parse(localStorage.getItem(CLAVE) || "null"); } catch(e){ yo = null; }
+if(!yo || !yo.id){
+  yo = {id:"p" + Math.random().toString(36).slice(2,10), obj:{}, enc:{}, otro:{}, caso:{}, req:[],
+        lider:{}, mat:{}, niv:{}, acciones:[], libre:"", ts:0};
+}
+["obj","enc","otro","caso","lider","mat","niv"].forEach(function(k){ if(!yo[k]) yo[k] = {}; });
+if(!Array.isArray(yo.req)) yo.req = [];
+if(!Array.isArray(yo.acciones)) yo.acciones = [];
+
+function guardar(){
+  yo.ts = Date.now();
+  try { localStorage.setItem(CLAVE, JSON.stringify(yo)); } catch(e){}
+}
+function registro(){
+  return {obj:yo.obj, enc:yo.enc, otro:yo.otro, caso:yo.caso, req:yo.req, lider:yo.lider,
+          mat:yo.mat, niv:yo.niv, acciones:yo.acciones, libre:yo.libre, ts:yo.ts};
+}
+function tengoAlgo(){
+  var r = registro();
+  return !!(Object.keys(r.obj).length || Object.keys(r.enc).length || Object.keys(r.otro).length || Object.keys(r.caso).length ||
+            Object.keys(r.lider).length || Object.keys(r.mat).length || Object.keys(r.niv).length ||
+            r.req.length || r.acciones.length || (r.libre && r.libre.trim()));
+}
+
+/* ═══════════ PUBLICACIÓN ═══════════ */
+
+function construirDoc(estado){
+  var css = document.getElementById("css").textContent;
+  var src = document.getElementById("src").innerHTML;
+  var js  = document.getElementById("appjs").textContent;
+  var enlace = document.getElementById("fuentes");
+  var href = enlace ? enlace.getAttribute("href") : "";
+  var json = JSON.stringify(estado).replace(/</g, "\\u003c");
+  var ct = "<" + "/script>";
+  return '<!doctype html>\n<html lang="es">\n<head>\n<meta charset="utf-8">\n' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
+    '<title>Revisión Conjunta del Programa</title>\n' +
+    '<link rel="preconnect" href="https://fonts.googleapis.com">\n' +
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
+    '<link id="fuentes" rel="stylesheet" href="' + href + '">\n' +
+    '<style id="css">' + css + '</style>\n</head>\n<body>\n' +
+    '<template id="src">' + src + '</template>\n<div id="app"></div>\n' +
+    '<script id="estado" type="application/json">' + json + ct + '\n' +
+    '<script id="appjs">' + js + ct + '\n</body>\n</html>';
+}
+
+function contador(d){
+  var n = 0;
+  try { n = parseInt(sessionStorage.getItem("ct_pub") || "0", 10) || 0; } catch(e){}
+  if(d){ try { sessionStorage.setItem("ct_pub", String(n + d)); } catch(e){} }
+  return n;
+}
+function escribiendo(){
+  var a = document.activeElement;
+  return !!a && (a.tagName === "TEXTAREA" || a.tagName === "INPUT");
+}
+function marcarPendiente(si){
+  var m = document.getElementById("avisoTexto");
+  if(!m || !TRANSPORTE) return;
+  m.innerHTML = si
+    ? "Tablero <b>conectado</b>. Tienes respuestas sin enviar; se envían solas en unos segundos."
+    : "Tablero del colectivo <b>conectado</b>. Tus respuestas se suman al resultado del grupo, siempre sin nombre.";
+}
+function programarEnvio(inmediato){
+  if(!TRANSPORTE) return;
+  marcarPendiente(true);
+  if(temporizador) clearTimeout(temporizador);
+  temporizador = setTimeout(publicar, inmediato ? 400 : 5000);
+}
+/* Transporte A · la API del Observatorio. Guarda un registro anónimo por
+   participante y devuelve el conjunto; nunca viaja un nombre. */
+function transporteServidor(){
+  return {
+    vivo:true,
+    enviar:function(){
+      return fetch(RUTA_API, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({sesion:SESION, pid:yo.id, reg:registro()})
+      }).then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); });
+    },
+    refrescar:function(){
+      return fetch(RUTA_API + "?sesion=" + encodeURIComponent(SESION), {cache:"no-store"})
+        .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function(d){
+          if(!d || !d.participantes) return false;
+          var antes = JSON.stringify(compartido.participantes);
+          var mio = compartido.participantes[yo.id];
+          compartido.participantes = d.participantes;
+          if(mio) compartido.participantes[yo.id] = mio;
+          return JSON.stringify(compartido.participantes) !== antes;
+        });
+    }
+  };
+}
+
+/* Transporte B · la capability del artifact, que republica la página entera. */
+function transporteArtifact(a){
+  return {
+    vivo:false,
+    enviar:function(){
+      if(contador(0) > 30) return Promise.resolve();
+      contador(1);
+      try { sessionStorage.setItem("ct_scroll", String(window.scrollY)); } catch(e){}
+      return a.publish(construirDoc(compartido));
+    },
+    refrescar:function(){ return Promise.resolve(false); }
+  };
+}
+
+function refrescarVistas(){
+  try {
+    pintarRequisitos();
+    pintarLiderazgo();
+    pintarTablero();
+    if(analisisPintado) montarAnalisis();
+  } catch(e){}
+}
+
+function sondear(){
+  if(!TRANSPORTE || !TRANSPORTE.vivo || publicando) return;
+  TRANSPORTE.refrescar().then(function(cambio){
+    if(cambio) refrescarVistas();
+  })["catch"](function(){});
+}
+
+function publicar(){
+  if(!TRANSPORTE || publicando) return;
+  if(escribiendo()){ temporizador = setTimeout(publicar, 5000); return; }
+  publicando = true;
+  compartido.participantes[yo.id] = registro();
+  TRANSPORTE.enviar().then(function(){
+    publicando = false;
+    fallosSeguidos = 0;
+    marcarPendiente(false);
+  })["catch"](function(err){
+    publicando = false;
+    var c = err && err.code;
+    if(c === "not_writer" || c === "not_granted" || c === "not_declared" ||
+       c === "capability_disabled" || c === "capability_removed"){
+      TRANSPORTE = null;
+      modoSolo("Esta vista es de solo lectura, así que tus respuestas quedan guardadas únicamente en este dispositivo. Para que se sumen al tablero, el enlace debe compartirse con permiso de edición.");
+      return;
+    }
+    fallosSeguidos++;
+    if(fallosSeguidos >= 5){
+      TRANSPORTE = null;
+      modoSolo("Se perdió la conexión con el tablero. Tus respuestas siguen guardadas en este dispositivo y puedes descargar tu acta al final; avísale a quien facilita la sesión.");
+      return;
+    }
+    temporizador = setTimeout(publicar, 8000);
+  });
+}
+
+function arrancarTransporte(){
+  var intento;
+  try {
+    intento = fetch(RUTA_API + "?sesion=" + encodeURIComponent(SESION), {cache:"no-store"})
+      .then(function(r){ if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+  } catch(e){
+    intento = Promise.reject(e);
+  }
+  intento.then(function(d){
+    if(!d || typeof d !== "object" || !d.participantes) throw new Error("respuesta inesperada");
+    compartido.participantes = d.participantes;
+    TRANSPORTE = transporteServidor();
+    modoVivo();
+    refrescarVistas();
+    sincronizar();
+    setInterval(sondear, 7000);
+  })["catch"](function(){
+    if(window.claude && window.claude.use){
+      window.claude.use("artifact").then(function(a){
+        if(a && a.publish){ TRANSPORTE = transporteArtifact(a); modoVivo(); sincronizar(); }
+        else modoSolo();
+      })["catch"](function(){ modoSolo(); });
+    } else {
+      modoSolo();
+    }
+  });
+}
+
+function sincronizar(){
+  if(!TRANSPORTE || !tengoAlgo()) return;
+  var alla = compartido.participantes[yo.id];
+  if(!alla || JSON.stringify(alla) !== JSON.stringify(registro())){
+    temporizador = setTimeout(publicar, 700 + Math.random() * 3000);
+  }
+}
+function modoVivo(){
+  var a = document.getElementById("avisoConexion");
+  if(!a) return;
+  a.className = "aviso vivo";
+  marcarPendiente(false);
+}
+function modoSolo(msg){
+  var a = document.getElementById("avisoConexion");
+  if(!a) return;
+  a.className = "aviso solo";
+  document.getElementById("avisoTexto").innerHTML = msg ||
+    "Modo individual: tus respuestas se guardan solo en este dispositivo. Puedes recorrer todo y descargar tu acta al final.";
+}
+
+/* ═══════════ UTILIDADES ═══════════ */
+
+function esc(s){ return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function el(id){ return document.getElementById(id); }
+function todos(){
+  var r = [];
+  for(var k in compartido.participantes){ if(k !== yo.id) r.push(compartido.participantes[k]); }
+  if(tengoAlgo()) r.push(registro());
+  return r;
+}
+function prom(a){ return a.length ? a.reduce(function(x,y){ return x + y; }, 0) / a.length : 0; }
+function desv(a){
+  if(a.length < 2) return 0;
+  var m = prom(a);
+  return Math.sqrt(prom(a.map(function(v){ return (v - m) * (v - m); })));
+}
+function barra(etq, valor, max, texto, color, hueco){
+  var pct = max ? Math.round(valor / max * 100) : 0;
+  var estilo = hueco
+    ? "background:" + color + "-tenue);border:1px solid " + color + ")"
+    : "background:" + color + ")";
+  return '<div class="barra-item"><span>' + esc(etq) + '</span>' +
+    '<span class="pista"><i style="width:' + Math.max(pct, 2) + '%;' + estilo + '"></i></span>' +
+    '<span class="n">' + esc(texto) + "</span></div>";
+}
+function plural(n, s, p){ return n + " " + (n === 1 ? s : p); }
+function materia(slug){
+  for(var i = 0; i < MATERIAS.length; i++){ if(MATERIAS[i].slug === slug) return MATERIAS[i]; }
+  return null;
+}
+/* posición 0-100 de una materia, derivada de los peldaños marcados */
+function posDe(reg, slug){
+  var a = reg && reg.enc && reg.enc[slug];
+  if(!a || !a.length) return undefined;
+  var s = 0;
+  a.forEach(function(i){ s += PELDANOS[i]; });
+  return s / a.length;
+}
+
+var ENE = String.fromCharCode(241), ENE_MAY = String.fromCharCode(209), MARCA = String.fromCharCode(1);
+function normaliza(s){
+  var t = String(s || "").split(ENE).join(MARCA).split(ENE_MAY).join(MARCA);
+  if(t.normalize) t = t.normalize("NFD");
+  t = t.replace(new RegExp("[\\u0300-\\u036f]", "g"), "");
+  t = t.split(MARCA).join(ENE).toLowerCase();
+  return t.replace(new RegExp("[^a-z0-9 " + ENE + "]", "g"), " ");
+}
+function terminos(textos){
+  var df = {}, tf = {};
+  textos.forEach(function(t){
+    var vistos = {};
+    normaliza(t).split(/\s+/).forEach(function(w){
+      if(w.length < 4 || VACIAS.indexOf(w) >= 0) return;
+      tf[w] = (tf[w] || 0) + 1;
+      if(!vistos[w]){ vistos[w] = 1; df[w] = (df[w] || 0) + 1; }
+    });
+  });
+  return Object.keys(df).map(function(w){ return {w:w, df:df[w], tf:tf[w]}; })
+    .sort(function(a,b){ return b.df - a.df || b.tf - a.tf || a.w.localeCompare(b.w); });
+}
+
+/* ═══════════ RAIL ═══════════ */
+
+function montarRail(){
+  var secs = Array.prototype.slice.call(app.querySelectorAll(".estacion"));
+  var rail = el("rail");
+  rail.innerHTML = secs.map(function(s, i){
+    return '<button type="button" data-ir="' + s.id + '"><span class="nodo"></span><span>' +
+      ("0" + i).slice(-2) + " · " + esc(s.dataset.titulo) + "</span></button>";
+  }).join("");
+  rail.addEventListener("click", function(e){
+    var b = e.target.closest("[data-ir]"); if(!b) return;
+    var d = el(b.dataset.ir); if(d) d.scrollIntoView({block:"start"});
+  });
+  var botones = Array.prototype.slice.call(rail.querySelectorAll("button"));
+  var obs = new IntersectionObserver(function(ents){
+    ents.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var i = secs.indexOf(en.target);
+      botones.forEach(function(b, j){
+        b.setAttribute("aria-current", j === i ? "true" : "false");
+        b.classList.toggle("visto", j < i);
+      });
+      el("barraEtq").textContent = ("0" + i).slice(-2) + " · " + secs[i].dataset.titulo;
+      el("barraNum").textContent = i + "/" + (secs.length - 1);
+      el("barraPista").style.width = (i / (secs.length - 1) * 100) + "%";
+    });
+  }, {rootMargin:"-45% 0px -45% 0px"});
+  secs.forEach(function(s){ obs.observe(s); });
+}
+
+/* ═══════════ BLOQUE 1 · LAS MATERIAS ═══════════ */
+
+function etiquetaPos(v){
+  if(v === undefined) return "sin marcar";
+  if(v <= 20) return "lo esencial · " + Math.round(v);
+  if(v <= 40) return "más bien básico · " + Math.round(v);
+  if(v <= 60) return "en el medio · " + Math.round(v);
+  if(v <= 80) return "más bien exigente · " + Math.round(v);
+  return "nivel empresa · " + Math.round(v);
+}
+
+function montarMaterias(){
+  var c = el("materias");
+  c.innerHTML = MATERIAS.map(function(m){
+    var sel = yo.enc[m.slug] || [];
+    var txt = yo.obj[m.slug] || "";
+    return '<div class="bloque-materia" data-m="' + m.slug + '">' +
+      '<div class="cab"><b>' + esc(m.nombre) + '</b><span class="chip">Nivel ' + m.nivel + '</span></div>' +
+      '<p class="sub"><b>Hoy:</b> ' + esc(m.hoy) + '</p>' +
+      '<div class="paso"><div class="campo"><label class="fila" for="ob-' + m.slug + '">' +
+        '<span>1 · El objetivo central de esta materia, en una frase</span>' +
+        '<span class="contador" data-cc="' + m.slug + '">' + txt.length + "/" + TOPE + '</span></label>' +
+        '<textarea class="corta" id="ob-' + m.slug + '" data-obj="' + m.slug + '" maxlength="' + TOPE +
+        '" placeholder="Con tus palabras. Estas frases son las que se comparan entre todos por frecuencia de términos.">' +
+        esc(txt) + '</textarea></div></div>' +
+      '<div class="paso"><span class="mini">2 · ¿Hasta dónde debería llegar el estudiante? (marca todos los peldaños que apliquen)</span>' +
+        m.enc.map(function(t, i){
+          return '<button type="button" class="opcion" data-enc="' + m.slug + '" data-i="' + i +
+            '" data-on="' + (sel.indexOf(i) >= 0 ? 1 : 0) + '"><span class="letra">' + (i + 1) + "</span>" + esc(t) + "</button>";
+        }).join("") +
+        '<div class="polos" style="margin-top:.55rem"><span>Lo esencial</span><span data-pos="' + m.slug + '">' +
+        etiquetaPos(posDe(yo, m.slug)) + '</span><span>Nivel empresa</span></div>' +
+        '<button type="button" class="opcion" data-otro="' + m.slug + '" data-on="' + (yo.otro[m.slug] !== undefined ? 1 : 0) +
+          '" style="margin-top:.7rem"><span class="letra">+</span>Falta una temática en esta materia</button>' +
+        '<div class="campo" data-campootro="' + m.slug + '" style="margin-top:.6rem"' + (yo.otro[m.slug] === undefined ? " hidden" : "") +
+          '><label class="fila" for="ot-' + m.slug + '"><span>¿Qué temática falta?</span></label>' +
+          '<input type="text" id="ot-' + m.slug + '" data-otrotxt="' + m.slug + '" maxlength="' + TOPE +
+          '" placeholder="Nómbrala en pocas palabras" value="' + esc(yo.otro[m.slug] || "") + '"></div></div>' +
+      "</div>";
+  }).join("");
+
+  c.addEventListener("click", function(e){
+    var o = e.target.closest("[data-otro]");
+    if(o){
+      var s = o.dataset.otro, activo = yo.otro[s] !== undefined;
+      if(activo) delete yo.otro[s]; else yo.otro[s] = "";
+      o.dataset.on = activo ? 0 : 1;
+      var campo = c.querySelector('[data-campootro="' + s + '"]');
+      campo.hidden = activo;
+      if(!activo) campo.querySelector("input").focus();
+      guardar(); programarEnvio();
+      return;
+    }
+    var b = e.target.closest("[data-enc]"); if(!b) return;
+    var slug = b.dataset.enc, i = parseInt(b.dataset.i, 10);
+    var arr = yo.enc[slug] || [];
+    var p = arr.indexOf(i);
+    if(p >= 0) arr.splice(p, 1); else arr.push(i);
+    if(arr.length) yo.enc[slug] = arr; else delete yo.enc[slug];
+    b.dataset.on = p >= 0 ? 0 : 1;
+    c.querySelector('[data-pos="' + slug + '"]').textContent = etiquetaPos(posDe(yo, slug));
+    guardar(); programarEnvio();
+  });
+  c.addEventListener("input", function(e){
+    var ot = e.target.closest("[data-otrotxt]");
+    if(ot){ yo.otro[ot.dataset.otrotxt] = ot.value; guardar(); return; }
+    var t = e.target.closest("[data-obj]"); if(!t) return;
+    var slug = t.dataset.obj, v = t.value;
+    if(v.trim()) yo.obj[slug] = v.trim(); else delete yo.obj[slug];
+    var cc = c.querySelector('[data-cc="' + slug + '"]');
+    cc.textContent = v.length + "/" + TOPE;
+    cc.classList.toggle("cerca", v.length > TOPE - 25);
+    guardar();
+  });
+  c.addEventListener("change", function(e){
+    if(e.target.closest("[data-obj]") || e.target.closest("[data-otrotxt]")) programarEnvio();
+  });
+}
+
+/* ═══════════ BLOQUE 2 · EL INTEGRADOR ═══════════ */
+
+function montarCaso(){
+  var c = el("caso");
+  c.innerHTML = MATERIAS.map(function(m){
+    var v = yo.caso[m.slug];
+    return '<div class="bloque-materia" data-m="' + m.slug + '">' +
+      '<div class="cab"><b>' + esc(m.nombre) + '</b><span class="chip">Nivel ' + m.nivel + '</span></div>' +
+      '<p class="sub">Frente al caso de la cooperativa, esta materia…</p>' +
+      '<div style="margin-top:.9rem">' +
+      m.caso.map(function(o, i){
+        return '<button type="button" class="opcion" data-caso="' + m.slug + '" data-i="' + i +
+          '" data-on="' + (v === i ? 1 : 0) + '"><span class="letra">' + "ABCDE"[i] + "</span>" + esc(o.t) + "</button>";
+      }).join("") + "</div></div>";
+  }).join("");
+  c.addEventListener("click", function(e){
+    var b = e.target.closest("[data-caso]"); if(!b) return;
+    var slug = b.dataset.caso, i = parseInt(b.dataset.i, 10);
+    yo.caso[slug] = i;
+    Array.prototype.forEach.call(c.querySelectorAll('[data-caso="' + slug + '"]'), function(x){
+      x.dataset.on = parseInt(x.dataset.i, 10) === i ? 1 : 0;
+    });
+    guardar(); programarEnvio();
+  });
+}
+
+function montarRequisitos(){
+  var c = el("requisitos");
+  c.innerHTML = REQUISITOS.map(function(r, i){
+    return '<button type="button" class="opcion" data-req="' + r.id + '" data-on="' +
+      (yo.req.indexOf(r.id) >= 0 ? 1 : 0) + '"><span class="letra">' + "ABCDEFGH"[i] + "</span>" + esc(r.t) + "</button>";
+  }).join("");
+  c.addEventListener("click", function(e){
+    var b = e.target.closest("[data-req]"); if(!b) return;
+    var id = b.dataset.req, p = yo.req.indexOf(id);
+    if(p >= 0) yo.req.splice(p, 1); else yo.req.push(id);
+    b.dataset.on = p >= 0 ? 0 : 1;
+    guardar(); programarEnvio(); pintarRequisitos();
+  });
+  pintarRequisitos();
+}
+
+function pintarRequisitos(){
+  var res = el("resultadoReq");
+  if(!yo.req.length){ res.hidden = true; return; }
+  var lista = todos().filter(function(p){ return p.req && p.req.length; });
+  if(lista.length < 2){ res.hidden = true; return; }
+  res.hidden = false;
+  res.innerHTML = '<div style="margin-top:1.4rem"><span class="mini">El colectivo · ' +
+    plural(lista.length, "respuesta", "respuestas") + '</span><div class="barras">' +
+    REQUISITOS.map(function(r, i){
+      var n = lista.filter(function(p){ return p.req.indexOf(r.id) >= 0; }).length;
+      var pct = Math.round(n / lista.length * 100);
+      return barra("ABCDEFGH"[i], n, lista.length, pct + " %",
+                   "var(--" + (pct > 50 ? "converge" : "line-fuerte"), false);
+    }).join("") + "</div></div>";
+}
+
+function montarLiderazgo(){
+  var c = el("liderazgo");
+  c.innerHTML = LIDERAZGO.map(function(q){
+    return '<div class="panel" style="margin-top:.8rem" data-q="' + q.id + '">' +
+      '<span class="eyebrow" style="margin-bottom:.5rem">' + esc(q.nivel) + "</span><h3>" + esc(q.pregunta) + "</h3>" +
+      '<div style="margin-top:1rem">' + q.ops.map(function(o, i){
+        return '<button type="button" class="opcion" data-lid="' + q.id + '" data-i="' + i +
+          '" data-on="' + (yo.lider[q.id] === i ? 1 : 0) + '"><span class="letra">' + "ABCD"[i] + "</span>" + esc(o) + "</button>";
+      }).join("") + '</div><div class="veredicto" hidden></div></div>';
+  }).join("");
+  c.addEventListener("click", function(e){
+    var b = e.target.closest("[data-lid]"); if(!b) return;
+    var id = b.dataset.lid, i = parseInt(b.dataset.i, 10);
+    yo.lider[id] = i;
+    Array.prototype.forEach.call(c.querySelectorAll('[data-lid="' + id + '"]'), function(x){
+      x.dataset.on = parseInt(x.dataset.i, 10) === i ? 1 : 0;
+    });
+    guardar(); programarEnvio(); pintarLiderazgo();
+  });
+  pintarLiderazgo();
+}
+
+function pintarLiderazgo(){
+  var c = el("liderazgo");
+  LIDERAZGO.forEach(function(q){
+    var ver = c.querySelector('[data-q="' + q.id + '"] .veredicto');
+    if(yo.lider[q.id] === undefined){ ver.hidden = true; return; }
+    var lista = todos(), votos = q.ops.map(function(){ return 0; }), n = 0;
+    lista.forEach(function(p){
+      var v = p.lider && p.lider[q.id];
+      if(typeof v === "number"){ votos[v]++; n++; }
+    });
+    if(n < 2){ ver.hidden = true; return; }
+    ver.hidden = false;
+    var mx = Math.max.apply(null, votos);
+    ver.innerHTML = '<span class="et">El colectivo · ' + plural(n, "respuesta", "respuestas") + "</span>" +
+      '<div class="barras" style="margin-top:.6rem">' + q.ops.map(function(o, i){
+        return barra("ABCD"[i], votos[i], n, plural(votos[i], "voto", "votos"),
+                     "var(--" + (votos[i] === mx && votos[i] > 0 ? "acento" : "line-fuerte"), false);
+      }).join("") + "</div>";
+  });
+}
+
+/* ═══════════ BLOQUE 3 · PRÁCTICAS TRANSVERSALES ═══════════ */
+
+function montarMatriz(){
+  var c = el("matriz");
+  c.innerHTML = PRACTICAS.map(function(pr){
+    return '<div class="panel" style="margin-top:.9rem"><span class="eyebrow" style="margin-bottom:.4rem">' +
+      esc(pr.n) + "</span><p style=\"font-size:.94rem;color:var(--ink-soft);margin:0 0 1.1rem\">" + esc(pr.d) + "</p>" +
+      MATERIAS.map(function(m){
+        var v = yo.mat[m.slug] && yo.mat[m.slug][pr.k];
+        return '<div class="fila-grado"><div class="nm">' + esc(m.nombre) + "<i>Nivel " + m.nivel + "</i></div>" +
+          '<div class="grados">' + GRADOS.map(function(g, i){
+            return '<button type="button" data-cel="' + m.slug + "|" + pr.k + '" data-g="' + i +
+              '" aria-pressed="' + (v === i ? "true" : "false") + '" title="' + esc(g.t) + '">' + esc(g.c) + "</button>";
+          }).join("") + "</div></div>";
+      }).join("") + "</div>";
+  }).join("");
+  c.addEventListener("click", function(e){
+    var b = e.target.closest("[data-cel]"); if(!b) return;
+    var par = b.dataset.cel.split("|"), slug = par[0], k = par[1], g = parseInt(b.dataset.g, 10);
+    if(!yo.mat[slug]) yo.mat[slug] = {};
+    yo.mat[slug][k] = g;
+    Array.prototype.forEach.call(c.querySelectorAll('[data-cel="' + b.dataset.cel + '"]'), function(x){
+      x.setAttribute("aria-pressed", parseInt(x.dataset.g, 10) === g ? "true" : "false");
+    });
+    guardar(); programarEnvio();
+  });
+}
+
+function montarNiveles(){
+  var c = el("niveles");
+  c.innerHTML = NIVELES.map(function(nv){
+    return '<div class="panel" style="margin-top:.9rem"><span class="eyebrow" style="margin-bottom:.4rem">' +
+      esc(nv.t) + "</span><p style=\"font-size:.9rem;color:var(--ink-faint);margin:0 0 1.2rem\">" +
+      esc(nv.ms.map(function(s){ return materia(s).nombre; }).join(" · ")) + "</p>" +
+      nv.preguntas.map(function(q){
+        var id = nv.n + "_" + q.k, v = yo.niv[id];
+        return '<div style="margin-top:1.4rem"><span class="mini">' + esc(q.q) + "</span>" +
+          q.ops.map(function(o, i){
+            return '<button type="button" class="opcion" data-niv="' + id + '" data-i="' + i +
+              '" data-on="' + (v === i ? 1 : 0) + '"><span class="letra">' + "ABCD"[i] + "</span>" + esc(o) + "</button>";
+          }).join("") + "</div>";
+      }).join("") + "</div>";
+  }).join("");
+  c.addEventListener("click", function(e){
+    var b = e.target.closest("[data-niv]"); if(!b) return;
+    var id = b.dataset.niv, i = parseInt(b.dataset.i, 10);
+    yo.niv[id] = i;
+    Array.prototype.forEach.call(c.querySelectorAll('[data-niv="' + id + '"]'), function(x){
+      x.dataset.on = parseInt(x.dataset.i, 10) === i ? 1 : 0;
+    });
+    guardar(); programarEnvio();
+  });
+}
+
+/* ═══════════ 05 · DIVERGENCIAS ═══════════ */
+
+function pistaSVG(vals, mostrarBanda){
+  var W = 320, H = 26, x = function(v){ return 8 + v / 100 * (W - 16); };
+  var mn = Math.min.apply(null, vals), mx = Math.max.apply(null, vals), m = prom(vals);
+  var d = desv(vals);
+  var color = d > 20 ? "var(--diverge)" : (d > 10 ? "var(--acento)" : "var(--converge)");
+  var s = '<svg viewBox="0 0 ' + W + " " + H + '" style="width:100%;height:auto;display:block" role="img" aria-label="Dispersión de respuestas">';
+  s += '<rect x="8" y="11" width="' + (W - 16) + '" height="4" rx="2" fill="var(--line)"/>';
+  if(mostrarBanda && vals.length > 1){
+    s += '<rect x="' + x(mn).toFixed(1) + '" y="8" width="' + Math.max(x(mx) - x(mn), 2).toFixed(1) +
+         '" height="10" rx="3" fill="' + color + '" fill-opacity="0.2"/>';
+  }
+  vals.forEach(function(v){
+    s += '<circle cx="' + x(v).toFixed(1) + '" cy="13" r="3.4" fill="var(--ink-faint)" stroke="var(--surface)" stroke-width="1.6"><title>' + Math.round(v) + "</title></circle>";
+  });
+  s += '<rect x="' + (x(m) - 1).toFixed(1) + '" y="4" width="2" height="18" rx="1" fill="' + color + '"><title>promedio ' + Math.round(m) + "</title></rect>";
+  s += "</svg>";
+  return s;
+}
+
+function tonoCelda(v){
+  /* tope 55 % para que el numeral en var(--ink) siga legible en tema claro y oscuro */
+  return "background:color-mix(in srgb, var(--converge) " + Math.round(v / 3 * 55) + "%, var(--surface-2))";
+}
+
+function montarAnalisis(){
+  var cont = el("analisis");
+  var lista = todos();
+  var html = "";
+  var hayAlgo = false;
+
+  /* 1 · dispersión por materia */
+  var conPos = MATERIAS.map(function(m){
+    var vals = lista.map(function(p){ return posDe(p, m.slug); })
+                    .filter(function(v){ return typeof v === "number"; });
+    return {m:m, vals:vals, d:desv(vals), p:prom(vals)};
+  }).filter(function(o){ return o.vals.length > 0; });
+
+  if(conPos.length){
+    hayAlgo = true;
+    conPos.sort(function(a, b){ return b.d - a.d; });
+    html += '<div class="panel"><span class="eyebrow">Gráfica 1 · dispersión por materia</span>' +
+      "<h3>¿En qué materias no nos ponemos de acuerdo?</h3>" +
+      '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Cada punto es una persona; la posición sale del promedio de los peldaños que marcó. La banda cubre el rango entre la respuesta más baja y la más alta; la línea vertical marca el promedio. Ordenadas de mayor a menor dispersión.</p>' +
+      '<div style="margin-top:1.2rem">' +
+      conPos.map(function(o){
+        var tag = o.d > 20 ? ["alta","muy dividido"] : (o.d > 10 ? ["media","dividido"] : ["baja","consenso"]);
+        return '<div class="disp-fila"><div class="cab"><b>' + esc(o.m.nombre) + "</b>" +
+          '<span><span class="tag ' + tag[0] + '">' + tag[1] + "</span> " +
+          '<span class="n mono" style="font-size:.66rem;color:var(--ink-soft)">prom. ' + Math.round(o.p) +
+          " · ±" + o.d.toFixed(1) + " · " + plural(o.vals.length, "resp.", "resps.") + "</span></span></div>" +
+          pistaSVG(o.vals, true) +
+          '<div class="polos"><span>Lo esencial</span><span>Nivel empresa</span></div></div>';
+      }).join("") + "</div>" +
+      '<div class="leyenda"><span><i style="background:var(--diverge)"></i>Muy dividido (±20 o más)</span>' +
+      '<span><i style="background:var(--acento)"></i>Dividido</span>' +
+      '<span><i style="background:var(--converge)"></i>Consenso (±10 o menos)</span></div>' +
+      "</div>";
+
+    var top = conPos.slice(0, 3).filter(function(o){ return o.d > 10; });
+    if(top.length){
+      html += '<div class="panel franja div" style="margin-top:1rem"><h3 style="margin-bottom:.6rem">Lectura</h3><p style="margin-bottom:0">' +
+        "Donde más divergimos es en <b>" + top.map(function(o){ return esc(o.m.nombre); }).join("</b>, <b>") +
+        "</b>. Esas son las materias que necesitan una decisión de colectivo, no una conversación de pasillo.</p></div>";
+    }
+  }
+
+  /* 2 · frecuencia de términos */
+  var textos = [];
+  lista.forEach(function(p){
+    if(p.obj) for(var k in p.obj){ if(p.obj[k]) textos.push(p.obj[k]); }
+  });
+  if(textos.length >= 2){
+    hayAlgo = true;
+    var ts = terminos(textos);
+    var compartidos = ts.filter(function(t){ return t.df > 1; });
+    var unicos = ts.filter(function(t){ return t.df === 1; });
+    var maxdf = ts.length ? ts[0].df : 1;
+    html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica 2 · frecuencia de términos</span>' +
+      "<h3>¿Estamos usando las mismas palabras?</h3>" +
+      '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Sobre ' + textos.length +
+      " frases de objetivo, de máximo " + TOPE + " caracteres cada una. De <b>" + ts.length +
+      "</b> términos distintos, <b>" + compartidos.length + "</b> " +
+      (compartidos.length === 1 ? "aparece" : "aparecen") + " en más de una frase y <b>" +
+      unicos.length + "</b> " + (unicos.length === 1 ? "aparece" : "aparecen") + " una sola vez.</p>" +
+      '<div class="barras" style="margin-top:1.2rem">' +
+      ts.slice(0, 14).map(function(t){
+        return barra(t.w, t.df, maxdf, t.df + (t.df === 1 ? " × 1" : " frases"),
+                     "var(--" + (t.df > 1 ? "converge" : "diverge"), t.df === 1);
+      }).join("") + "</div>" +
+      '<div class="leyenda"><span><i style="background:var(--converge)"></i>Vocabulario compartido</span>' +
+      '<span><i style="background:var(--diverge-tenue);border:1px solid var(--diverge)"></i>Aparece una sola vez</span></div>' +
+      '<p class="fuente" style="margin-top:.9rem">Se descartan palabras vacías y términos de menos de cuatro letras. Un vocabulario mayoritariamente único no es un problema de redacción: indica que no hay acuerdo sobre para qué existe esa materia.</p></div>';
+  }
+
+  /* 2b · temáticas que faltan */
+  var faltas = [];
+  MATERIAS.forEach(function(m){
+    var dichas = [];
+    lista.forEach(function(p){
+      var v = p.otro && p.otro[m.slug];
+      if(v && v.trim()) dichas.push(v.trim());
+    });
+    if(dichas.length) faltas.push({m:m, ts:dichas});
+  });
+  if(faltas.length){
+    hayAlgo = true;
+    html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Temáticas que faltan</span>' +
+      "<h3>Lo que el colectivo echa de menos</h3>" +
+      '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Marcadas en el bloque 1, materia por materia. Van tal como se escribieron.</p>' +
+      '<div style="margin-top:1.1rem">' + faltas.map(function(f){
+        return '<div class="par-fila"><div class="cab"><b>' + esc(f.m.nombre) + '</b><span class="cif">' +
+          plural(f.ts.length, "mención", "menciones") + "</span></div>" +
+          f.ts.map(function(t){ return '<p style="font-size:.95rem;margin:.15rem 0 0">· ' + esc(t) + "</p>"; }).join("") + "</div>";
+      }).join("") + "</div></div>";
+  }
+
+  /* 3 · cómo concebimos el integrador */
+  var cuentaTipo = {}, totalCaso = 0;
+  ORDEN_TIPOS.forEach(function(k){ cuentaTipo[k] = 0; });
+  lista.forEach(function(p){
+    if(!p.caso) return;
+    for(var s in p.caso){
+      var m = materia(s), i = p.caso[s];
+      if(m && m.caso[i]){ cuentaTipo[m.caso[i].k]++; totalCaso++; }
+    }
+  });
+  if(totalCaso){
+    hayAlgo = true;
+    var integra = cuentaTipo.capa + cuentaTipo.insumo;
+    var pctInt = Math.round(integra / totalCaso * 100);
+    html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica 3 · cómo concebimos el integrador</span>' +
+      "<h3>¿Producto común o trabajos en paralelo?</h3>" +
+      '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Cada respuesta del bloque 2 se clasifica según el tipo de vínculo que propone con las otras materias. Sobre ' +
+      plural(totalCaso, "respuesta", "respuestas") + " del colectivo.</p>" +
+      '<div class="barras" style="margin-top:1.2rem">' +
+      ORDEN_TIPOS.map(function(k){
+        return barra(TIPOS[k].n, cuentaTipo[k], totalCaso,
+                     Math.round(cuentaTipo[k] / totalCaso * 100) + " %",
+                     "var(--" + (TIPOS[k].c === "integra" ? "converge" : "diverge"), TIPOS[k].c !== "integra");
+      }).join("") + "</div>" +
+      '<div class="leyenda"><span><i style="background:var(--converge)"></i>Concibe un producto común</span>' +
+      '<span><i style="background:var(--diverge-tenue);border:1px solid var(--diverge)"></i>Concibe trabajos sueltos</span></div>' +
+      '<p style="font-size:.96rem;margin-top:1rem;margin-bottom:0"><b>' + pctInt +
+      " %</b> de las respuestas describe un vínculo real con las otras materias" +
+      (pctInt >= 70 ? ": el colectivo concibe el integrador como un producto común."
+                    : (pctInt >= 40 ? ", y el resto describe trabajos que solo comparten el tema. Ahí está la conversación pendiente."
+                                    : ". La mayoría describe trabajos sueltos con el mismo tema, que es exactamente lo que el diseño llama <i>no integrador</i>.")) +
+      "</p>";
+
+    var porMateria = MATERIAS.map(function(m){
+      var i = 0, n = 0;
+      lista.forEach(function(p){
+        var v = p.caso && p.caso[m.slug];
+        if(typeof v === "number" && m.caso[v]){ n++; if(TIPOS[m.caso[v].k].c === "integra") i++; }
+      });
+      return {m:m, i:i, n:n};
+    }).filter(function(o){ return o.n > 0; });
+
+    if(porMateria.length){
+      html += '<div style="margin-top:1.6rem"><span class="mini">Materia por materia · porcentaje que describe un vínculo real</span>' +
+        '<div class="barras">' + porMateria.map(function(o){
+          var pct = Math.round(o.i / o.n * 100);
+          return barra(o.m.nombre, o.i, o.n, pct + " % de " + o.n,
+                       "var(--" + (pct > 50 ? "converge" : "diverge"), pct <= 50);
+        }).join("") + "</div></div>";
+    }
+
+    var hayLid = LIDERAZGO.some(function(q){
+      return lista.some(function(p){ return p.lider && typeof p.lider[q.id] === "number"; });
+    });
+    if(hayLid){
+      html += '<div style="margin-top:1.8rem"><span class="mini">Quién debería liderar cada nivel</span>' +
+        LIDERAZGO.map(function(q){
+          var votos = q.ops.map(function(){ return 0; }), n = 0;
+          lista.forEach(function(p){
+            var v = p.lider && p.lider[q.id];
+            if(typeof v === "number"){ votos[v]++; n++; }
+          });
+          if(!n) return "";
+          var mx = Math.max.apply(null, votos);
+          return '<div style="margin-top:1rem"><span class="fuente">' + esc(q.nivel) + " · " +
+            plural(n, "respuesta", "respuestas") + '</span><div class="barras">' +
+            q.ops.map(function(o, i){
+              return barra(o, votos[i], n, plural(votos[i], "voto", "votos"),
+                           "var(--" + (votos[i] === mx && votos[i] > 0 ? "acento" : "line-fuerte"), false);
+            }).join("") + "</div></div>";
+        }).join("") + "</div>";
+    }
+    html += "</div>";
+  }
+
+  /* 4 · requisitos del integrador */
+  var conReq = lista.filter(function(p){ return p.req && p.req.length; });
+  if(conReq.length){
+    hayAlgo = true;
+    html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica 4 · qué hace falta para que sea integrador</span>' +
+      "<h3>Dónde hay acuerdo sobre lo imprescindible</h3>" +
+      '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Porcentaje de quienes marcaron cada condición. En azul, las que superan la mitad del colectivo. Sobre ' +
+      plural(conReq.length, "respuesta", "respuestas") + '.</p><div class="barras" style="margin-top:1.2rem">' +
+      REQUISITOS.map(function(r, i){
+        var n = conReq.filter(function(p){ return p.req.indexOf(r.id) >= 0; }).length;
+        var pct = Math.round(n / conReq.length * 100);
+        return barra("ABCDEFGH"[i], n, conReq.length, pct + " %",
+                     "var(--" + (pct > 50 ? "converge" : "line-fuerte"), false);
+      }).join("") + '</div><p class="fuente" style="margin-top:.7rem">' +
+      REQUISITOS.map(function(r, i){ return "ABCDEFGH"[i] + " " + esc(r.t); }).join(" · ") + "</p></div>";
+  }
+
+  /* 5 · mapa de calor de las prácticas transversales */
+  var celdas = {}, hayMat = false;
+  MATERIAS.forEach(function(m){
+    celdas[m.slug] = {};
+    PRACTICAS.forEach(function(pr){
+      var vals = lista.map(function(p){ return p.mat && p.mat[m.slug] && p.mat[m.slug][pr.k]; })
+                      .filter(function(v){ return typeof v === "number"; });
+      celdas[m.slug][pr.k] = {v:prom(vals), d:desv(vals), n:vals.length};
+      if(vals.length) hayMat = true;
+    });
+  });
+  if(hayMat){
+    hayAlgo = true;
+    html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica 5 · dónde caben hoy las prácticas transversales</span>' +
+      "<h3>El mapa de las nueve materias</h3>" +
+      '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Promedio del colectivo en cada celda, de 0 (no cabe) a 3 (se practica y se evalúa). Cuanto más azul, más presencia. El borde magenta marca las celdas donde no nos ponemos de acuerdo.</p>' +
+      '<div class="tabla-envoltura" style="margin-top:1.2rem"><table class="mapa"><thead><tr><th class="mat">Materia</th>' +
+      PRACTICAS.map(function(pr){ return "<th>" + esc(pr.c) + "</th>"; }).join("") +
+      "</tr></thead><tbody>" +
+      MATERIAS.map(function(m){
+        return '<tr><th class="mat">' + esc(m.nombre) + "</th>" +
+          PRACTICAS.map(function(pr){
+            var c = celdas[m.slug][pr.k];
+            if(!c.n) return '<td title="sin respuestas">·</td>';
+            return '<td class="' + (c.d > 0.85 ? "disperso" : "") + '" style="' + tonoCelda(c.v) +
+              '" title="' + esc(m.nombre + " · " + pr.n + " · promedio " + c.v.toFixed(1) + " · dispersión " + c.d.toFixed(1) + " · " + c.n + " resp.") +
+              '">' + c.v.toFixed(1) + "</td>";
+          }).join("") + "</tr>";
+      }).join("") + "</tbody></table></div>" +
+      '<div class="leyenda"><span><i style="background:var(--surface-2);border:1px solid var(--line)"></i>0 · no cabe</span>' +
+      '<span><i style="background:var(--converge)"></i>3 · se practica y se evalúa</span>' +
+      '<span><i style="background:transparent;border:2px solid var(--diverge)"></i>Aquí no nos ponemos de acuerdo</span></div></div>';
+  }
+
+  /* 6 · alcance por nivel */
+  var hayNiv = NIVELES.some(function(nv){
+    return nv.preguntas.some(function(q){
+      return lista.some(function(p){ return p.niv && typeof p.niv[nv.n + "_" + q.k] === "number"; });
+    });
+  });
+  if(hayNiv){
+    hayAlgo = true;
+    html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica 6 · qué alcance le corresponde a cada nivel</span>' +
+      "<h3>Git, IA y cloud, nivel por nivel</h3>" +
+      NIVELES.map(function(nv){
+        return nv.preguntas.map(function(q){
+          var id = nv.n + "_" + q.k;
+          var votos = q.ops.map(function(){ return 0; }), n = 0;
+          lista.forEach(function(p){
+            var v = p.niv && p.niv[id];
+            if(typeof v === "number"){ votos[v]++; n++; }
+          });
+          if(!n) return "";
+          var mx = Math.max.apply(null, votos);
+          var d = desv(lista.map(function(p){ return p.niv && p.niv[id]; }).filter(function(v){ return typeof v === "number"; }));
+          return '<div style="margin-top:1.5rem"><span class="mini">' + esc(nv.t) + " · " + esc(q.q) + "</span>" +
+            '<span class="fuente" style="display:block;margin-bottom:.5rem">' + plural(n, "respuesta", "respuestas") +
+            " · dispersión ±" + d.toFixed(2) + (d > 1 ? " · <b>dividido</b>" : "") + '</span><div class="barras">' +
+            q.ops.map(function(o, i){
+              return barra("ABCD"[i], votos[i], n, plural(votos[i], "voto", "votos"),
+                           "var(--" + (votos[i] === mx && votos[i] > 0 ? (d > 1 ? "diverge" : "converge") : "line-fuerte"), false);
+            }).join("") + '</div><p class="fuente" style="margin-top:.5rem">' +
+            q.ops.map(function(o, i){ return "ABCD"[i] + " " + esc(o); }).join(" · ") + "</p></div>";
+        }).join("");
+      }).join("") + "</div>";
+  }
+
+  if(!hayAlgo){
+    cont.innerHTML = '<div class="aviso"><span class="pt"></span><span>Todavía no hay respuestas suficientes. Pide al grupo que complete al menos el bloque 1 y vuelve a analizar.</span></div>';
+    return;
+  }
+  cont.innerHTML = html;
+  analisisPintado = true;
+}
+
+/* ═══════════ 06 · EVIDENCIA ═══════════ */
+
+/* Índices de alineación de cada materia (0-100), tomados del Observatorio Curricular.
+   Cada dimensión es una suma ponderada calculada sobre el testeo con 8 empresas,
+   el panel de 10 expertos, Cenisoft 2025, el MNC, la CUOC 2025 y la FTCOCU-236. */
+var ALINEACION = [
+ {slug:"logica",     ct:75, mnc:90, emp:60, ped:82},
+ {slug:"intro",      ct:58, mnc:81, emp:50, ped:75},
+ {slug:"bd",         ct:71, mnc:85, emp:81, ped:69},
+ {slug:"agiles",     ct:69, mnc:85, emp:72, ped:86},
+ {slug:"backend1",   ct:68, mnc:88, emp:68, ped:68},
+ {slug:"frontend1",  ct:61, mnc:83, emp:65, ped:73},
+ {slug:"backend2",   ct:71, mnc:86, emp:76, ped:70},
+ {slug:"frontend2",  ct:82, mnc:85, emp:67, ped:81},
+ {slug:"nuevastec",  ct:77, mnc:83, emp:87, ped:86}
+];
+
+var EJES = [
+ {k:"mnc", n:"Marco Nacional de Cualificaciones"},
+ {k:"ped", n:"Estrategia pedagógica"},
+ {k:"ct",  n:"Perfil Consultor Tech"},
+ {k:"emp", n:"Empleabilidad"}
+];
+
+/* Brechas que las empresas señalaron en el testeo; la criticidad es ordinal, tal como
+   la reporta el Observatorio: media (1) · alta (2) · crítica (3). */
+var BRECHAS_EMP = [
+ {t:"Comprensión del negocio",            n:3, c:"crítica"},
+ {t:"Pensamiento orientado a solución",   n:2, c:"alta"},
+ {t:"Uso estratégico de IA",              n:2, c:"alta"},
+ {t:"Autonomía y aprendizaje continuo",   n:2, c:"alta"},
+ {t:"Habilidades blandas",                n:2, c:"alta"},
+ {t:"Automatización e integración",       n:1, c:"media"}
+];
+
+/* Foco de vigilancia tecnológica: demanda del sector según la matriz de brechas
+   del programa cruzada con CUOC 2025 (DANE) y Cenisoft 2025. */
+var FOCO = [
+ {t:"Big Data y analítica de datos",              v:50},
+ {t:"Inteligencia artificial y machine learning", v:47},
+ {t:"Computación en la nube (Azure/AWS)",         v:43},
+ {t:"Internet de las cosas (IoT)",                v:42},
+ {t:"Ciberseguridad",                             v:41},
+ {t:"Desarrollo full-stack",                      v:38},
+ {t:"DevOps y SRE",                               v:36},
+ {t:"Diseño UX/UI",                               v:32}
+];
+
+var FUENTES = [
+ {t:"Marco Nacional de Cualificaciones", d:"Decreto 1649 de 2021, que adiciona la Parte 7 al Libro 2 del Decreto 1075 de 2015. Ocho niveles definidos por conocimientos, destrezas y actitudes."},
+ {t:"Testeo empresarial CESDE–Comfama, 2026", d:"Ocho entrevistas cualitativas semiestructuradas: 3 empresas de software, 1 empresa 360 y 4 de capital humano del sector TI."},
+ {t:"Panel de expertos sectoriales CESDE", d:"Diez fichas de pertinencia curricular con categorización semáforo (Sura, Globant, Comfama y Cyclops, entre otros), 2 radares de cocreación y 1 sesión con justificaciones técnicas."},
+ {t:"CUOC 2025 · DANE", d:"Clasificación Única de Ocupaciones para Colombia. Define las ocupaciones reales del sector y sus requisitos."},
+ {t:"Estudio de Empleabilidad y Talento Digital · Cenisoft, 2025", d:"Demanda de perfiles y tecnologías del sector de software en Colombia."}
+];
+
+function dumbbell(mnc, emp){
+  var W = 320, H = 22, x = function(v){ return 8 + v / 100 * (W - 16); };
+  var s = '<svg viewBox="0 0 ' + W + " " + H + '" style="width:100%;height:auto;display:block" role="img" aria-label="Marco nacional frente a empleabilidad">';
+  s += '<rect x="8" y="10" width="' + (W - 16) + '" height="2" rx="1" fill="var(--line)"/>';
+  s += '<line x1="' + x(Math.min(mnc, emp)).toFixed(1) + '" y1="11" x2="' + x(Math.max(mnc, emp)).toFixed(1) +
+       '" y2="11" stroke="var(--diverge)" stroke-width="3"/>';
+  s += '<circle cx="' + x(emp).toFixed(1) + '" cy="11" r="4.6" fill="var(--diverge)"><title>Empleabilidad ' + emp + "</title></circle>";
+  s += '<circle cx="' + x(mnc).toFixed(1) + '" cy="11" r="4.6" fill="var(--converge)"><title>Marco nacional ' + mnc + "</title></circle>";
+  s += "</svg>";
+  return s;
+}
+
+function montarEvidencia(){
+  var c = el("evidencia");
+  var html = "";
+
+  /* --- los tres dolores, en una línea cada uno --- */
+  var promEje = {};
+  EJES.forEach(function(e){
+    promEje[e.k] = prom(ALINEACION.map(function(a){ return a[e.k]; }));
+  });
+  var brechaMedia = promEje.mnc - promEje.emp;
+
+  var dolores = [
+   {n:"Dolor 01", t:"Formamos para el marco, no para el mercado",
+    p:"El programa cumple con el descriptor nacional, pero eso no es lo mismo que responder a lo que hoy contrata el sector.",
+    d:"Marco nacional " + Math.round(promEje.mnc) + " / 100 · empleabilidad " + Math.round(promEje.emp) +
+      " / 100 · " + Math.round(brechaMedia) + " puntos de diferencia"},
+   {n:"Dolor 02", t:"Lo que enseñamos no se integra",
+    p:"Las tecnologías se aprenden por separado y el egresado no las junta en un producto que funcione de punta a punta.",
+    d:"«Automatización e integración» aparece como brecha en las nueve materias del programa"},
+   {n:"Dolor 03", t:"El egresado ejecuta, no formula",
+    p:"Recibe la tarea resuelta y la programa. Lo que las empresas echan de menos es que entienda el problema y proponga la solución.",
+    d:"«Comprensión del negocio» es la única brecha marcada como crítica; «pensamiento orientado a solución», alta"}
+  ];
+
+  html += '<div>' + dolores.map(function(d){
+    return '<div class="dolor"><span class="num">' + esc(d.n) + "</span><h4>" + esc(d.t) + "</h4>" +
+      "<p>" + esc(d.p) + '</p><span class="dato">' + esc(d.d) + "</span></div>";
+  }).join("") + "</div>";
+
+  /* --- gráfica A · los cuatro ejes --- */
+  html += '<div class="panel" style="margin-top:1.4rem"><span class="eyebrow">Gráfica A · las cuatro dimensiones</span>' +
+    "<h3>Dónde está alineado el programa y dónde no</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Promedio de las nueve materias en cada dimensión, sobre 100.</p>' +
+    '<div class="barras" style="margin-top:1.2rem">' +
+    EJES.map(function(e){
+      var v = promEje[e.k];
+      return barra(e.n, v, 100, Math.round(v) + " / 100",
+                   "var(--" + (v >= 80 ? "converge" : (v >= 75 ? "acento" : "diverge")), v < 75);
+    }).join("") + "</div>" +
+    '<div class="leyenda"><span><i style="background:var(--converge)"></i>80 o más</span>' +
+    '<span><i style="background:var(--acento)"></i>entre 75 y 80</span>' +
+    '<span><i style="background:var(--diverge-tenue);border:1px solid var(--diverge)"></i>por debajo de 75</span></div></div>';
+
+  /* --- gráfica B · marco frente a mercado --- */
+  var filas = ALINEACION.map(function(a){
+    return {a:a, m:materia(a.slug), g:a.mnc - a.emp};
+  }).sort(function(p, q){ return q.g - p.g; });
+
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica B · dolor 01</span>' +
+    "<h3>El marco por un lado, el mercado por el otro</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Cada línea es una materia. El punto azul es su alineación con el marco nacional; el magenta, con lo que pide el empleo. Cuanto más larga la línea, más se separan. Ordenadas de mayor a menor separación.</p>' +
+    '<div style="margin-top:1.2rem">' +
+    filas.map(function(f){
+      return '<div class="par-fila"><div class="cab"><b>' + esc(f.m.nombre) + "</b>" +
+        '<span class="cif">marco ' + f.a.mnc + " · empleo " + f.a.emp +
+        " · " + (f.g >= 0 ? "+" : "") + f.g + "</span></div>" + dumbbell(f.a.mnc, f.a.emp) + "</div>";
+    }).join("") + "</div>" +
+    '<div class="leyenda"><span><i style="background:var(--converge)"></i>Marco nacional</span>' +
+    '<span><i style="background:var(--diverge)"></i>Empleabilidad</span></div>' +
+    '<p style="font-size:.95rem;margin-top:1rem;margin-bottom:0">Las dos materias que más se separan son <b>' +
+    esc(filas[0].m.nombre) + "</b> y <b>" + esc(filas[1].m.nombre) +
+    "</b>, ambas del Nivel I. Es donde el estudiante se forma la idea de qué es programar.</p></div>";
+
+  /* --- gráfica C · brechas de las empresas --- */
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica C · dolores 02 y 03</span>' +
+    "<h3>Lo que las empresas echan de menos</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Seis brechas señaladas en el testeo con ocho empresas, con la criticidad que ellas mismas le asignaron. Son las mismas en las nueve materias: no es un problema de una asignatura.</p>' +
+    '<div class="barras" style="margin-top:1.2rem">' +
+    BRECHAS_EMP.map(function(b){
+      return barra(b.t, b.n, 3, b.c, "var(--" + (b.n === 3 ? "diverge" : (b.n === 2 ? "acento" : "line-fuerte")), false);
+    }).join("") + "</div>" +
+    '<p style="font-size:.95rem;margin-top:1.2rem;margin-bottom:0">Ninguna de las seis es una tecnología. Son todas capacidades que se forman en <b>cómo</b> se enseña, no en <b>qué</b> se enseña: por eso la discusión del proyecto integrador y la del nivel de exigencia son la misma discusión.</p></div>';
+
+  /* --- gráfica D · foco del sector --- */
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">Gráfica D · demanda del sector</span>' +
+    "<h3>Lo que hoy se está contratando</h3>" +
+    '<p style="font-size:.95rem;color:var(--ink-soft);margin-top:.5rem">Foco de vigilancia tecnológica del programa, derivado de la matriz de brechas cruzada con la CUOC 2025 y el estudio de empleabilidad de Cenisoft 2025.</p>' +
+    '<div class="barras" style="margin-top:1.2rem">' +
+    FOCO.map(function(f){
+      return barra(f.t, f.v, 50, f.v + " %", "var(--" + (f.v >= 43 ? "converge" : "line-fuerte"), false);
+    }).join("") + "</div>" +
+    '<p style="font-size:.95rem;margin-top:1.2rem;margin-bottom:0">Tres de los cuatro focos más demandados —analítica, nube y DevOps— son justamente los que el bloque 3 de esta sesión pregunta si caben hoy en alguna materia.</p></div>';
+
+  /* --- fuentes --- */
+  html += '<div class="panel" style="margin-top:1rem"><span class="eyebrow">De dónde salen estos números</span>' +
+    "<h3>Las cinco fuentes</h3><div style=\"margin-top:1.1rem\">" +
+    FUENTES.map(function(f){
+      return '<div class="par-fila"><div class="cab"><b>' + esc(f.t) + "</b></div>" +
+        '<p style="font-size:.93rem;color:var(--ink-soft);margin:.15rem 0 0">' + esc(f.d) + "</p></div>";
+    }).join("") + "</div>" +
+    '<p class="fuente" style="margin-top:1.1rem">Los índices de alineación provienen del Observatorio Curricular del programa, donde cada dimensión se calcula como una suma ponderada de factores valorados de 0 a 100 sobre esas fuentes y la estructura didáctica FTCOCU-236.</p></div>';
+
+  c.innerHTML = html;
+}
+
+/* ═══════════ 07 · CIERRE ═══════════ */
+
+function montarAcciones(){
+  var c = el("acciones");
+  c.innerHTML = ACCIONES.map(function(k){
+    var on = yo.acciones.indexOf(k.id) >= 0;
+    return '<label class="accion" data-a="' + k.id + '" data-on="' + (on ? 1 : 0) + '">' +
+      '<input type="checkbox" ' + (on ? "checked" : "") + ' data-chk="' + k.id + '">' +
+      '<span class="t">' + esc(k.t) + '</span><span class="cuenta" data-cc="' + k.id + '"></span></label>';
+  }).join("");
+  c.addEventListener("change", function(e){
+    var i = e.target.closest("[data-chk]"); if(!i) return;
+    var id = i.dataset.chk, p = yo.acciones.indexOf(id);
+    if(i.checked && p < 0) yo.acciones.push(id);
+    if(!i.checked && p >= 0) yo.acciones.splice(p, 1);
+    c.querySelector('[data-a="' + id + '"]').dataset.on = i.checked ? 1 : 0;
+    guardar(); programarEnvio();
+  });
+  el("inLibre").value = yo.libre || "";
+  el("btnCerrar").addEventListener("click", function(){
+    yo.libre = el("inLibre").value.trim();
+    guardar(); programarEnvio(true);
+    el("estadoCierre").textContent = "Registrado. Ya está en el acta del colectivo.";
+    pintarTablero();
+  });
+  el("btnExportar").addEventListener("click", exportar);
+  pintarTablero();
+}
+
+function pintarTablero(){
+  var c = el("acciones"), lista = todos();
+  ACCIONES.forEach(function(k){
+    var n = lista.filter(function(p){ return p.acciones && p.acciones.indexOf(k.id) >= 0; }).length;
+    var s = c.querySelector('[data-cc="' + k.id + '"]');
+    if(s) s.textContent = n ? n + "×" : "";
+  });
+  var libres = lista.filter(function(p){ return p.libre && p.libre.trim(); });
+  var frases = 0, marcas = 0;
+  lista.forEach(function(p){
+    if(p.obj) frases += Object.keys(p.obj).length;
+    if(p.mat) for(var s in p.mat) marcas += Object.keys(p.mat[s]).length;
+  });
+  el("tableroFinal").innerHTML = '<div class="panel"><span class="eyebrow">Estado de la sesión</span>' +
+    '<div class="cifras" style="margin-top:0">' +
+    "<div><b>" + lista.length + "</b><span>participantes</span></div>" +
+    "<div><b>" + frases + "</b><span>frases de objetivo</span></div>" +
+    "<div><b>" + marcas + "</b><span>marcas en el mapa</span></div>" +
+    "<div><b>" + libres.length + "</b><span>observaciones</span></div></div>" +
+    (libres.length ? '<div style="margin-top:1.2rem"><span class="mini">Lo que quedó dicho</span>' +
+      libres.map(function(p){ return '<p style="font-size:.95rem;margin:0 0 .7rem">' + esc(p.libre) + "</p>"; }).join("") +
+      "</div>" : "") + "</div>";
+}
+
+/* ═══════════ ACTA ═══════════ */
+
+function acta(){
+  var lista = todos(), L = [];
+  L.push("ACTA · REVISIÓN CONJUNTA DEL PROGRAMA");
+  L.push("Colectivo docente · Técnico Laboral como Asistente en Desarrollo de Software · CESDE Medellín");
+  L.push("Caso de trabajo: cooperativa de recicladores de oficio, nororiente de Medellín.");
+  L.push("Fecha: " + new Date().toLocaleString("es-CO"));
+  L.push("Participantes (anónimos): " + lista.length);
+  L.push("");
+
+  L.push("BLOQUE 1 · CÓMO VEMOS CADA MATERIA");
+  L.push("");
+  L.push("1.1 POSICIÓN Y DISPERSIÓN POR MATERIA (0 = lo esencial · 100 = nivel empresa)");
+  MATERIAS.map(function(m){
+    var v = lista.map(function(p){ return posDe(p, m.slug); }).filter(function(x){ return typeof x === "number"; });
+    return {m:m, v:v, d:desv(v), p:prom(v)};
+  }).filter(function(o){ return o.v.length; }).sort(function(a, b){ return b.d - a.d; })
+    .forEach(function(o){
+      L.push("   " + o.m.nombre + ": promedio " + Math.round(o.p) + " · dispersión ±" + o.d.toFixed(1) +
+             " · rango " + Math.round(Math.min.apply(null, o.v)) + "-" + Math.round(Math.max.apply(null, o.v)) +
+             " · " + o.v.length + " resp.");
+    });
+  L.push("");
+  L.push("1.2 PELDAÑOS MÁS MARCADOS POR MATERIA");
+  MATERIAS.forEach(function(m){
+    var votos = m.enc.map(function(){ return 0; }), n = 0;
+    lista.forEach(function(p){
+      var a = p.enc && p.enc[m.slug];
+      if(a && a.length){ n++; a.forEach(function(i){ if(votos[i] !== undefined) votos[i]++; }); }
+    });
+    if(!n) return;
+    L.push("   " + m.nombre + " (" + n + " resp.)");
+    m.enc.forEach(function(t, i){ L.push("       [" + Math.round(votos[i] / n * 100) + "%] (" + PELDANOS[i] + ") " + t); });
+  });
+  L.push("");
+  L.push("1.3 FRASES DE OBJETIVO, POR MATERIA (máximo " + TOPE + " caracteres)");
+  MATERIAS.forEach(function(m){
+    var rs = [];
+    lista.forEach(function(p){ if(p.obj && p.obj[m.slug]) rs.push(p.obj[m.slug]); });
+    if(!rs.length) return;
+    L.push("   " + m.nombre);
+    rs.forEach(function(t){ L.push("       · " + t); });
+  });
+  L.push("");
+  L.push("1.4 FRECUENCIA DE TÉRMINOS EN LAS FRASES DE OBJETIVO");
+  var textos = [];
+  lista.forEach(function(p){ if(p.obj) for(var k in p.obj){ if(p.obj[k]) textos.push(p.obj[k]); } });
+  var ts = terminos(textos);
+  L.push("   Frases analizadas: " + textos.length + " · términos distintos: " + ts.length +
+         " · compartidos: " + ts.filter(function(t){ return t.df > 1; }).length);
+  ts.slice(0, 20).forEach(function(t){ L.push("       " + t.w + " — en " + t.df + " frase(s), " + t.tf + " menciones"); });
+  L.push("");
+
+  L.push("1.5 TEMÁTICAS QUE FALTAN, SEGÚN EL COLECTIVO");
+  var hayF = false;
+  MATERIAS.forEach(function(m){
+    var rs = [];
+    lista.forEach(function(p){ if(p.otro && p.otro[m.slug] && p.otro[m.slug].trim()) rs.push(p.otro[m.slug].trim()); });
+    if(!rs.length) return;
+    hayF = true;
+    L.push("   " + m.nombre);
+    rs.forEach(function(t){ L.push("       · " + t); });
+  });
+  if(!hayF) L.push("   (ninguna registrada)");
+  L.push("");
+
+  L.push("BLOQUE 2 · EL PROYECTO INTEGRADOR");
+  L.push("");
+  L.push("2.1 QUÉ HARÍA CADA MATERIA CON EL CASO");
+  MATERIAS.forEach(function(m){
+    var votos = m.caso.map(function(){ return 0; }), n = 0;
+    lista.forEach(function(p){
+      var v = p.caso && p.caso[m.slug];
+      if(typeof v === "number" && votos[v] !== undefined){ votos[v]++; n++; }
+    });
+    if(!n) return;
+    L.push("   " + m.nombre + " (" + n + " resp.)");
+    m.caso.forEach(function(o, i){
+      L.push("       [" + Math.round(votos[i] / n * 100) + "%] {" + o.k + "} " + o.t);
+    });
+  });
+  L.push("");
+  L.push("2.2 CONCEPCIÓN DEL INTEGRADOR (agregado de todas las respuestas del bloque 2)");
+  var ct = {}, tot = 0;
+  ORDEN_TIPOS.forEach(function(k){ ct[k] = 0; });
+  lista.forEach(function(p){
+    if(!p.caso) return;
+    for(var s in p.caso){
+      var m = materia(s), i = p.caso[s];
+      if(m && m.caso[i]){ ct[m.caso[i].k]++; tot++; }
+    }
+  });
+  ORDEN_TIPOS.forEach(function(k){
+    L.push("   [" + (tot ? Math.round(ct[k] / tot * 100) : 0) + "%] " + TIPOS[k].n + " (" + TIPOS[k].c + ")");
+  });
+  L.push("   Vínculo real con otras materias: " + (tot ? Math.round((ct.capa + ct.insumo) / tot * 100) : 0) + "% de " + tot + " respuestas.");
+  L.push("");
+  L.push("2.3 QUÉ HACE FALTA PARA QUE SEA INTEGRADOR");
+  var conReq = lista.filter(function(p){ return p.req && p.req.length; });
+  REQUISITOS.forEach(function(r){
+    var n = conReq.filter(function(p){ return p.req.indexOf(r.id) >= 0; }).length;
+    L.push("   [" + (conReq.length ? Math.round(n / conReq.length * 100) : 0) + "%] " + r.t);
+  });
+  L.push("");
+  L.push("2.4 QUIÉN DEBERÍA LIDERAR CADA NIVEL");
+  LIDERAZGO.forEach(function(q){
+    L.push("   " + q.nivel);
+    q.ops.forEach(function(o, i){
+      L.push("       [" + lista.filter(function(p){ return p.lider && p.lider[q.id] === i; }).length + "] " + o);
+    });
+  });
+  L.push("");
+
+  L.push("BLOQUE 3 · PRÁCTICAS TRANSVERSALES");
+  L.push("");
+  L.push("3.1 MAPA: DÓNDE CABEN HOY (0 no cabe · 1 se menciona · 2 se practica · 3 se practica y se evalúa)");
+  L.push("   Materia                                | " + PRACTICAS.map(function(pr){ return (pr.k + "      ").slice(0, 6); }).join(" | "));
+  MATERIAS.forEach(function(m){
+    var fila = PRACTICAS.map(function(pr){
+      var vals = lista.map(function(p){ return p.mat && p.mat[m.slug] && p.mat[m.slug][pr.k]; })
+                      .filter(function(v){ return typeof v === "number"; });
+      if(!vals.length) return "  ·   ";
+      return (" " + prom(vals).toFixed(1) + "±" + desv(vals).toFixed(1)).slice(0, 6);
+    }).join(" | ");
+    L.push("   " + (m.nombre + "                                        ").slice(0, 38) + " | " + fila);
+  });
+  L.push("   (valor = promedio del colectivo · ± = dispersión; una dispersión alta significa que no lo vemos igual)");
+  L.push("");
+  L.push("3.2 QUÉ ALCANCE LE CORRESPONDE A CADA NIVEL");
+  NIVELES.forEach(function(nv){
+    nv.preguntas.forEach(function(q){
+      var id = nv.n + "_" + q.k;
+      var vals = lista.map(function(p){ return p.niv && p.niv[id]; }).filter(function(v){ return typeof v === "number"; });
+      L.push("   " + nv.t + " · " + q.q + "  (dispersión ±" + desv(vals).toFixed(2) + ")");
+      q.ops.forEach(function(o, i){
+        L.push("       [" + vals.filter(function(v){ return v === i; }).length + "] " + o);
+      });
+    });
+  });
+  L.push("");
+
+  L.push("CIERRE");
+  L.push("");
+  L.push("4.1 ACCIONES MARCADAS");
+  ACCIONES.forEach(function(k){
+    L.push("   [" + lista.filter(function(p){ return p.acciones && p.acciones.indexOf(k.id) >= 0; }).length + "] " + k.t);
+  });
+  L.push("");
+  L.push("4.2 OBSERVACIONES, DESACUERDOS Y CONDICIONES");
+  var hay = false;
+  lista.forEach(function(p){ if(p.libre && p.libre.trim()){ hay = true; L.push("   · " + p.libre); } });
+  if(!hay) L.push("   (ninguna registrada)");
+  L.push("");
+  L.push("ANEXO · EVIDENCIA EXTERNA (datos del Observatorio Curricular, no recogidos en esta sesión)");
+  L.push("   Promedio de alineación de las nueve materias, sobre 100:");
+  EJES.forEach(function(e){
+    L.push("       " + e.n + ": " + Math.round(prom(ALINEACION.map(function(a){ return a[e.k]; }))));
+  });
+  L.push("   Separación marco nacional / empleabilidad, por materia:");
+  ALINEACION.map(function(a){ return {m:materia(a.slug), a:a, g:a.mnc - a.emp}; })
+    .sort(function(p, q){ return q.g - p.g; })
+    .forEach(function(f){ L.push("       " + f.m.nombre + ": marco " + f.a.mnc + " · empleo " + f.a.emp + " · diferencia " + (f.g >= 0 ? "+" : "") + f.g); });
+  L.push("   Brechas señaladas por las empresas: " + BRECHAS_EMP.map(function(b){ return b.t + " (" + b.c + ")"; }).join(" · "));
+  L.push("   Foco de demanda del sector: " + FOCO.map(function(f){ return f.t + " " + f.v + "%"; }).join(" · "));
+  L.push("");
+  L.push("Fuentes: Observatorio Curricular CESDE · Decreto 1649 de 2021 (MNC) · Cenisoft 2025 · CUOC 2025 (DANE) · Testeo empresarial CESDE-Comfama 2026 · Panel de expertos sectoriales CESDE.");
+  return L.join("\n");
+}
+
+function exportar(){
+  var texto = acta();
+  var nombre = "acta-revision-conjunta-" + new Date().toISOString().slice(0, 10) + ".txt";
+  if(window.claude && window.claude.use){
+    window.claude.use("downloads").then(function(d){
+      if(d && d.save) d.save({filename:nombre, data:texto})["catch"](function(){ mostrarActa(texto); });
+      else mostrarActa(texto);
+    })["catch"](function(){ mostrarActa(texto); });
+  } else mostrarActa(texto);
+}
+
+function mostrarActa(texto){
+  var t = el("estadoCierre");
+  t.innerHTML = "";
+  var aviso = document.createElement("p");
+  aviso.textContent = "No se pudo descargar el archivo desde aquí. El acta quedó copiada al portapapeles; también puedes seleccionarla abajo:";
+  var p = document.createElement("pre");
+  p.style.cssText = "white-space:pre-wrap;font-family:var(--mono);font-size:.7rem;line-height:1.6;background:var(--surface-2);border:1px solid var(--line);padding:1rem;max-height:22rem;overflow:auto;margin-top:.8rem";
+  p.textContent = texto;
+  t.appendChild(aviso); t.appendChild(p);
+  try { if(navigator.clipboard) navigator.clipboard.writeText(texto); } catch(e){}
+}
+
+/* ═══════════ ARRANQUE ═══════════ */
+
+app.innerHTML = document.getElementById("src").innerHTML;
+montarRail();
+montarMaterias();
+montarCaso();
+montarRequisitos();
+montarLiderazgo();
+montarMatriz();
+montarNiveles();
+montarEvidencia();
+montarAcciones();
+
+el("btnEmpezar").addEventListener("click", function(){ el("e1").scrollIntoView({block:"start"}); });
+el("btnAnalizar").addEventListener("click", function(){
+  montarAnalisis();
+  el("estadoAnalisis").textContent = "Actualizado con " + plural(todos().length, "participante", "participantes") + ".";
+});
+
+try {
+  var y = parseFloat(sessionStorage.getItem("ct_scroll") || "0");
+  if(y > 0){
+    var previo = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, y);
+    setTimeout(function(){ document.documentElement.style.scrollBehavior = previo; }, 60);
+    sessionStorage.removeItem("ct_scroll");
+  }
+} catch(e){}
+
+arrancarTransporte();
+
+})();
+</script>
+
+</body>
+</html>
